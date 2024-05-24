@@ -1,3 +1,4 @@
+import CustomSandPack from "@/components/sandPack/CustomSandPack";
 import { SandPack_Default_Code } from "@/constants/common";
 import useOpenAi from "@/hooks/useOpenAi";
 import { Sandpack } from "@codesandbox/sandpack-react";
@@ -5,7 +6,7 @@ import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function AiTest() {
-  const { getAiCode, aiCode, isLoading } = useOpenAi();
+  const { getAiCode, aiCode, setAiCode, isLoading } = useOpenAi();
 
   const [userContent, setUserContent] = useState<string>("");
 
@@ -33,19 +34,17 @@ export default function AiTest() {
         </Button>
       </form>
 
-      <div className="w-full">
-        <Sandpack
+      <CustomSandPack aiCode={aiCode} setAiCode={setAiCode} />
+      <div className=" w-full">
+        {/* <Sandpack
           template="react-ts"
-          options={{
-            externalResources: ["https://cdn.tailwindcss.com"],
-            editorHeight: 600,
-          }}
+          options={{ externalResources: ["https://cdn.tailwindcss.com"] }}
           files={{
             "/App.tsx": {
               code: aiCode ? `${aiCode}` : SandPack_Default_Code,
             },
           }}
-        />
+        /> */}
       </div>
     </div>
   );
