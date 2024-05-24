@@ -21,9 +21,9 @@ export default function AiTest() {
   return (
     <Container>
       <h1 className="text-3xl font-bold tracking-tight">EZCodeMaker</h1>
-      <div className="flex flex-col justify-start gap-4 py-8 md:py-10">
+      <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <form
-          className="flex flex-row items-start justify-start w-full"
+          className="flex flex-row justify-center w-full mx-auto"
           onSubmit={onSubmit}
         >
           <Input
@@ -38,6 +38,17 @@ export default function AiTest() {
         </form>
 
         <CustomSandPack aiCode={aiCode} setAiCode={setAiCode} />
+        <div className=" w-full">
+          {/* <Sandpack
+          template="react-ts"
+          options={{ externalResources: ["https://cdn.tailwindcss.com"] }}
+          files={{
+            "/App.tsx": {
+              code: aiCode ? `${aiCode}` : SandPack_Default_Code,
+            },
+          }}
+        /> */}
+        </div>
       </div>
     </Container>
   );
