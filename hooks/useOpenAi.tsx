@@ -4,6 +4,8 @@ export default function useOpenAi() {
   const [aiCode, setAiCode] = useState("");
   const [loadingMsg, setLoadingMsg] = useState("");
 
+  const onReset = () => setAiCode("");
+
   const getAiCode = async (content: string) => {
     setLoadingMsg("코드 작성 중...");
 
@@ -37,5 +39,12 @@ export default function useOpenAi() {
     }
   };
 
-  return { getAiCode, aiCode, setAiCode, loadingMsg, isLoading: !!loadingMsg };
+  return {
+    getAiCode,
+    aiCode,
+    setAiCode,
+    loadingMsg,
+    isLoading: !!loadingMsg,
+    onReset,
+  };
 }
