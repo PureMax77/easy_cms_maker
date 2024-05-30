@@ -23,7 +23,7 @@ export default function AiTest() {
       <h1 className="text-3xl font-bold tracking-tight">EZCodeMaker</h1>
       <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <form
-          className="flex flex-row justify-center w-full mx-auto"
+          className="flex flex-row items-start justify-start w-full mx-auto"
           onSubmit={onSubmit}
         >
           <Input
