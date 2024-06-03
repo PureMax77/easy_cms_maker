@@ -27,9 +27,11 @@ const EzSelect: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col justify-center w-full">
+    <div className="flex flex-col max-w-[1280px] justify-center w-full">
       <div className="flex flex-col mb-5 border-b-1 py-5">
-        <span className="mb-2">Select Page layout direction and number</span>
+        <div className="mb-2 sectionTitle">
+          <span>Select Page layout direction and number.</span>
+        </div>
         <div className="flex gap-3">
           <Tabs
             color="success"
@@ -60,8 +62,27 @@ const EzSelect: React.FC = () => {
           <Button color="primary">OK</Button>
         </div>
       </div>
+      <div className="flex flex-col gap-3 mb-5 border-b-1 pb-5">
+        <div className="mb-2 sectionTitle">
+          <span>Enter the Page title and information.</span>
+        </div>
+        <dl className="flex flex-row w-full gap-3">
+          <dt className="w-[220px]">Page Title</dt>
+          <dd className="w-full">
+            <input type="text" className="w-full border-1 rounded-sm" />
+          </dd>
+        </dl>
+        <dl className="flex flex-row w-full gap-3">
+          <dt className="w-[220px]">Page Description</dt>
+          <dd className="w-full">
+            <textarea className="w-full border-1 rounded-sm" />
+          </dd>
+        </dl>
+      </div>
       <div className="flex flex-col gap-3">
-        <span className="mb-2">Select Tag</span>
+        <div className="mb-2 sectionTitle">
+          <span>Select a tag to enter a section.</span>
+        </div>
         {Array.from({ length: Number(basicLayout.step) }, (_, index) => (
           <TagStep key={index} itemKey={index} />
         ))}

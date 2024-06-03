@@ -32,7 +32,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
   return (
     <div className="flex">
       <div className="px-5 border-r-1">
-        <span className="mr-3">{itemKey + 1} Step</span>
+        <span className="mr-3">{itemKey + 1} Section Information</span>
         <Tabs
           color="default"
           radius="sm"

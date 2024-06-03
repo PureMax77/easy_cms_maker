@@ -13,11 +13,9 @@ const Container = ({
   style?: React.CSSProperties;
   children: React.ReactNode;
 }) => {
-  let router = useRouter();
-  let maxWidth = "1280px";
   return (
     <div
-      className={`fflex flex-col items-center justify-center py-12`}
+      className={`flex flex-col justify-center py-12`}
       style={{ ...style }}
     >
       {children}

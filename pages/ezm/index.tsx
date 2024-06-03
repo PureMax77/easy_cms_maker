@@ -2,7 +2,7 @@ import EzSelect from "@/components/EzSelect";
 import CustomSandPack from "@/components/sandPack/CustomSandPack";
 import useOpenAi from "@/hooks/useOpenAi";
 import { Sandpack } from "@codesandbox/sandpack-react";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Textarea } from "@nextui-org/react";
 import { useState } from "react";
 import Container from "@/components/Conatiner";
 
@@ -21,19 +21,25 @@ export default function AiTest() {
   return (
     <Container>
       <h1 className="text-3xl font-bold tracking-tight">EZCodeMaker</h1>
-      <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+      <div>
         <EzSelect />
 
         <form
-          className="flex flex-row justify-center w-full mx-auto mb-10 mt-20"
+          className="flex flex-row justify-start items-end w-full mb-10 mt-20"
           onSubmit={onSubmit}
         >
-          <Input
-            className="mr-3 max-w-screen-md w-full"
+          <Textarea
+            className="mr-3 max-w-screen-md w-full rounded-full"
             placeholder="요청사항을 입력하세요."
             value={userContent}
             onChange={(e) => setUserContent(e.target.value)}
           />
+          {/* <Input
+            className="mr-3 max-w-screen-md w-full"
+            placeholder="요청사항을 입력하세요."
+            value={userContent}
+            onChange={(e) => setUserContent(e.target.value)}
+          /> */}
           <Button
             className="mr-2"
             color="primary"
