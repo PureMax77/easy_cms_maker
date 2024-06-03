@@ -1,15 +1,16 @@
-import { EzListLayoutTypes, EzTagTypes } from "@/types";
-import {
-  Checkbox,
-  Input,
-  Radio,
-  RadioGroup,
-  Tab,
-  Tabs,
-  useDisclosure,
-} from "@nextui-org/react";
+import { EzTagTypes, IFormOptions, IListOptions, ITableOptions } from "@/types";
+import { Input, Tab, Tabs } from "@nextui-org/react";
 import { useMemo, useState } from "react";
-import EzTableModal from "./EzTableModal";
+import { useAtom } from "jotai";
+import {
+  initFormValue,
+  initListValue,
+  initTableValue,
+  sectionListAtom,
+} from "@/store";
+import TagStep_List from "./TagStep_List";
+import TagStep_Table from "./TagStep_Table";
+import TagStep_Form from "./TagStep_Form";
 
 interface Props {
   itemKey: number;
@@ -17,81 +18,85 @@ interface Props {
 
 const TagStep: React.FC<Props> = ({ itemKey }) => {
   const tagTypes: EzTagTypes[] = useMemo(() => Object.values(EzTagTypes), []);
-  const listLayoutTypes: EzListLayoutTypes[] = useMemo(
-    () => Object.values(EzListLayoutTypes),
+
+  const [sectionList, setSectionList] = useAtom(sectionListAtom);
+  const [tagType, setTagType] = useState<EzTagTypes>(EzTagTypes.LIST);
+
+  const initListBox = useMemo(
+    () => [initListValue, initTableValue, initFormValue],
     []
   );
 
-  const [tagType, setTagType] = useState<EzTagTypes>(EzTagTypes.LIST);
-  const {
-    isOpen: table_isOpen,
-    onOpen: table_onOpen,
-    onOpenChange: table_onOpenChange,
-  } = useDisclosure();
+  const onTagTypeChange = (e: any) => {
+    setSectionList((preV) => {
+      const newList = [...preV];
+      const initValue = initListBox.find((v) => v.kind === e) || initListValue;
+      newList[itemKey] = initValue;
+
+      return newList;
+    });
+
+    setTagType(e);
+  };
+
+  const onTitleChange = (e: string) => {
+    setSectionList((preV) => {
+      const newList = [...preV];
+      const newSection = {
+        ...newList[itemKey],
+        title: e,
+      };
+      newList[itemKey] = newSection;
+      return newList;
+    });
+  };
 
   return (
-    <div className="flex">
-      <div className="px-5 border-r-1">
-        <span className="mr-3">{itemKey + 1} Step</span>
-        <Tabs
-          color="default"
-          radius="sm"
-          onSelectionChange={(e: any) => setTagType(e)}
-        >
-          {tagTypes.map((type) => (
-            <Tab key={type} title={type} />
-          ))}
-        </Tabs>
+    <div className="flex flex-col mb-5">
+      <div className="flex items-center mb-3">
+        <span className="mr-8">{itemKey + 1} Section Information</span>
+        <Input
+          className="w-64"
+          placeholder="Section Title"
+          value={sectionList[itemKey].title}
+          onValueChange={onTitleChange}
+        />
       </div>
-      {tagType === EzTagTypes.LIST && (
-        <>
-          <div className="flex px-5 border-r-1">
-            <RadioGroup className="justify-center" orientation="horizontal">
-              {listLayoutTypes.map((type, index) => (
-                <Radio key={index} value={type}>
-                  {type}
-                </Radio>
-              ))}
-            </RadioGroup>
-          </div>
-          <div className="flex items-center px-5 gap-3">
-            <Checkbox>Icon</Checkbox>
-            <Checkbox>Image</Checkbox>
-            <Checkbox>Drag & Drop</Checkbox>
-          </div>
-        </>
-      )}
-      {tagType === EzTagTypes.TABLE && (
-        <>
-          <div className="flex items-center px-5 border-r-1">
-            <Input className="mr-1" type="number" />
-            <span className="mr-3">Column</span>
-            <EzTableModal
-              isOpen={table_isOpen}
-              onOpen={table_onOpen}
-              onOpenChange={table_onOpenChange}
-            />
-          </div>
-          <div className="flex items-center px-5 gap-3">
-            <Checkbox>Row Click Event</Checkbox>
-            <Checkbox>Pagination</Checkbox>
-            <Checkbox>Drag & Drop</Checkbox>
-          </div>
-        </>
-      )}
-      {tagType === EzTagTypes.FORM && (
-        <>
-          <div className="flex items-center px-5">
-            <Input className="mr-1" type="number" />
-            <span className="mr-3">Item</span>
-            <EzTableModal
-              isOpen={table_isOpen}
-              onOpen={table_onOpen}
-              onOpenChange={table_onOpenChange}
-            />
-          </div>
-        </>
-      )}
+      <div className="flex">
+        <div className="pr-5 border-r-1">
+          <Tabs
+            color="default"
+            radius="sm"
+            selectedKey={sectionList[itemKey].kind}
+            onSelectionChange={onTagTypeChange}
+          >
+            {tagTypes.map((type) => (
+              <Tab key={type} title={type} />
+            ))}
+          </Tabs>
+        </div>
+        {tagType === EzTagTypes.LIST && (
+          <TagStep_List
+            sectionData={sectionList[itemKey] as IListOptions}
+            setSectionList={setSectionList}
+            itemKey={itemKey}
+          />
+        )}
+        {tagType === EzTagTypes.TABLE && (
+          <TagStep_Table
+            sectionData={sectionList[itemKey] as ITableOptions}
+            setSectionList={setSectionList}
+            itemKey={itemKey}
+          />
+        )}
+        {tagType === EzTagTypes.FORM && (
+          <TagStep_Form
+            sectionData={sectionList[itemKey] as IFormOptions}
+            setSectionList={setSectionList}
+            itemKey={itemKey}
+          />
+        )}
+      </div>
     </div>
   );
 };

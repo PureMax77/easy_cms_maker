@@ -1,21 +1,12 @@
-import {
-  BasicDirectionTypes,
-  EzListLayoutTypes,
-  EzTagTypes,
-  IBasicLayout,
-} from "@/types";
-import {
-  Button,
-  Checkbox,
-  Radio,
-  RadioGroup,
-  Tab,
-  Tabs,
-} from "@nextui-org/react";
-import { useMemo, useState } from "react";
+import { BasicDirectionTypes, IBasicLayout } from "@/types";
+import { Button, Tab, Tabs } from "@nextui-org/react";
+import { useEffect, useMemo, useState } from "react";
 import TagStep from "./TagStep";
+import { useAtom } from "jotai";
+import { initListValue, sectionListAtom } from "@/store";
 
 const EzSelect: React.FC = () => {
+  const [sectionList, setSectionList] = useAtom(sectionListAtom);
   const [basicLayout, setBasicLayout] = useState<IBasicLayout>({
     direction: BasicDirectionTypes.HORIZONTAL,
     step: "1",
@@ -25,6 +16,10 @@ const EzSelect: React.FC = () => {
     () => Object.values(BasicDirectionTypes),
     []
   );
+
+  useEffect(() => {
+    setSectionList(Array(Number(basicLayout.step)).fill(initListValue));
+  }, [basicLayout.step]);
 
   return (
     <div className="flex flex-col justify-center w-full">
@@ -62,7 +57,7 @@ const EzSelect: React.FC = () => {
       </div>
       <div className="flex flex-col gap-3">
         <span className="mb-2">Select Tag</span>
-        {Array.from({ length: Number(basicLayout.step) }, (_, index) => (
+        {sectionList.map((_, index) => (
           <TagStep key={index} itemKey={index} />
         ))}
       </div>

@@ -13,7 +13,7 @@ interface Props {
   onOpenChange: () => void;
 }
 
-const EzTableModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
+const EzFormModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
   return (
     <>
       <Button onPress={onOpen}>Setting</Button>
@@ -22,7 +22,7 @@ const EzTableModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Table Column
+                Modal Title
               </ModalHeader>
               <ModalBody>
                 <p>
@@ -60,4 +60,4 @@ const EzTableModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
   );
 };
 
-export default EzTableModal;
+export default EzFormModal;

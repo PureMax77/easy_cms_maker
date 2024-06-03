@@ -6,6 +6,7 @@ import { fontSans, fontMono } from "@/config/fonts";
 import { useRouter } from "next/router";
 import DefaultLayout from "@/layouts/default";
 import "@/styles/globals.css";
+import { Provider } from "jotai";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -14,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <NextUIProvider navigate={router.push}>
       <NextThemesProvider>
         <DefaultLayout>
-          <Component {...pageProps} />
+          <Provider>
+            <Component {...pageProps} />
+          </Provider>
         </DefaultLayout>
       </NextThemesProvider>
     </NextUIProvider>
