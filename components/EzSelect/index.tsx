@@ -56,7 +56,9 @@ const EzSelect: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <span className="mb-2">Select Tag</span>
+        <span className="mb-2 underline underline-offset-4">
+          Select a tag to enter a section
+        </span>
         {sectionList.map((_, index) => (
           <TagStep key={index} itemKey={index} />
         ))}

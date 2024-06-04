@@ -1,7 +1,7 @@
 import { Checkbox, Input, useDisclosure } from "@nextui-org/react";
 import EzTableModal from "./EzTableModal";
-import { ITableOptions } from "@/types";
-import { SectionListType } from "@/store";
+import { IColumnContent, ITableOptions } from "@/types";
+import { SectionListType, initColumnContent } from "@/store";
 
 interface Props {
   itemKey: number;
@@ -18,6 +18,27 @@ const TagStep_Table: React.FC<Props> = ({
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const getNewColumnContents = (
+    preSection: ITableOptions,
+    nowNumber: number, // 현재 입력된 숫자
+    type: ChangeType
+  ): IColumnContent[] | null => {
+    if (type !== "column") return null;
+
+    const preNumber = preSection.columns; // 이전 숫자
+    const newContents = preSection.columnContents;
+
+    if (preNumber > nowNumber) {
+      newContents.splice(nowNumber);
+    } else if (preNumber < nowNumber) {
+      newContents.push(initColumnContent);
+    } else {
+      return null;
+    }
+
+    return newContents;
+  };
+
   const onValueChange = (e: any, type: ChangeType) => {
     // column 변경 시 value check
     let columnNumber = Number(e);
@@ -27,9 +48,16 @@ const TagStep_Table: React.FC<Props> = ({
 
     setSectionList((preV: SectionListType) => {
       const newList = [...preV];
+      const columnContents = getNewColumnContents(
+        preV[itemKey] as ITableOptions,
+        columnNumber,
+        type
+      );
+
       const newSection = {
         ...newList[itemKey],
         ...(type === "column" && { columns: columnNumber }),
+        ...(type === "column" && columnContents && { columnContents }),
         ...(type === "row_click" && { isRowClick: e }),
         ...(type === "pagination" && { isPagination: e }),
         ...(type === "drag" && { isDragDrop: e }),
@@ -53,6 +81,7 @@ const TagStep_Table: React.FC<Props> = ({
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
+          itemKey={itemKey}
         />
       </div>
       <div className="flex items-center px-5 gap-3">
