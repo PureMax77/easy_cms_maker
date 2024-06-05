@@ -1,1 +1,10 @@
-.sectionTitle span { display: inline-block; padding-right: 25px; border-bottom: 1px solid #000 }
+.sectionTitle span { display: inline-block; font-weight: 500; padding-right: 25px; border-bottom: 1px solid #000 }
+.subTitle { border-left: 4px solid #60BA05; padding-left: 10px }
+
+.optTabs > div { gap: inherit !important; padding: 0 !important;  background-color: #fff !important; border-radius: 4px !important; border: 1px solid rgba(0,0,0,.2); }
+.optTabs button { padding-left: 0 !important; padding-right: 0 !important; min-width: 120px; font-size: 16px; border-radius: 0 !important; border-left: 1px solid rgba(0,0,0,.2); }
+.optTabs button:first-child { border-left: 0; }
+.optTabs button span { border-radius: 0 !important; }
+.optTabs .bg-success { background-color: #E9F6DB; }
+
+.optNumber > div > div { min-height: inherit !important; }
