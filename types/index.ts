@@ -17,13 +17,13 @@ export interface IBasicLayout {
 export enum EzTagTypes {
   LIST = "List",
   TABLE = "Table",
-  FORM = "From",
+  FORM = "Form",
 }
 
 export enum EzListLayoutTypes {
   HORIZONTAL = "Horizontal",
   VERTICAL = "Vertical",
-  ARRANGEMENT = "Arrow",
+  ARRANGEMENT = "Array",
 }
 
 export interface IPageLayoutForm {

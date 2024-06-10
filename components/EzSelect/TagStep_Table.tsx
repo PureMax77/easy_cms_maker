@@ -41,21 +41,22 @@ const TagStep_Table: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex items-center px-5 border-r-1">
+      <div className="flex items-center px-8 border-r-1">
         <Input
-          className="mr-1"
+          className="mr-1 w-[50px]"
           type="number"
+          size="sm"
           value={String(sectionData.columns)}
           onValueChange={(e) => onValueChange(e, "column")}
         />
-        <span className="mr-3">Column</span>
+        <span className="mr-3 ml-1">Column</span>
         <EzTableModal
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         />
       </div>
-      <div className="flex items-center px-5 gap-3">
+      <div className="flex items-center px-8 gap-5">
         <Checkbox
           isSelected={sectionData.isRowClick}
           onValueChange={(e) => onValueChange(e, "row_click")}

@@ -1,7 +1,15 @@
 import { SectionListType } from "@/store";
 import { EzListLayoutTypes, IListOptions } from "@/types";
-import { Checkbox, Radio, RadioGroup, checkbox } from "@nextui-org/react";
+import {
+  Checkbox,
+  Tab,
+  Tabs,
+} from "@nextui-org/react";
 import { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGripHorizontal, faGripVertical, faTableCells
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   itemKey: number;
@@ -38,21 +46,37 @@ const TagStep_List: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex px-5 border-r-1">
-        <RadioGroup
-          className="justify-center"
-          orientation="horizontal"
-          value={sectionData.layout}
-          onValueChange={(e) => onValueChange(e, "layout")}
+      <div className="flex px-8 border-r-1">
+        <Tabs
+          color="success"
+          radius="sm"
+          selectedKey={sectionData.layout}
+          onSelectionChange={(e) => onValueChange(e, "layout")}
+          className="optTabs"
         >
-          {listLayoutTypes.map((type, index) => (
-            <Radio key={index} value={type}>
-              {type}
-            </Radio>
+          {listLayoutTypes.map((type) => (
+            <Tab
+              key={type}
+              title={
+                <div>
+                  <FontAwesomeIcon
+                    icon={
+                      type == "Horizontal"
+                        ? faGripHorizontal
+                        : type == "Vertical"
+                        ? faGripVertical
+                        : faTableCells
+                    }
+                    className="fas fa-check mr-2"
+                  ></FontAwesomeIcon>
+                  {type}
+                </div>
+              }
+            />
           ))}
-        </RadioGroup>
+        </Tabs>
       </div>
-      <div className="flex items-center px-5 gap-3">
+      <div className="flex items-center px-8 gap-5">
         <Checkbox
           isSelected={sectionData.isIcon}
           onValueChange={(e) => onValueChange(e, "icon")}

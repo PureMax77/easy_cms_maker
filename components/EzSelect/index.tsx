@@ -4,6 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import TagStep from "./TagStep";
 import { useAtom } from "jotai";
 import { initListValue, sectionListAtom } from "@/store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGripHorizontal,
+  faGripVertical,
+} from "@fortawesome/free-solid-svg-icons";
 
 const EzSelect: React.FC = () => {
   const [sectionList, setSectionList] = useAtom(sectionListAtom);
@@ -39,7 +44,22 @@ const EzSelect: React.FC = () => {
               className="optTabs"
             >
               {directionTypes.map((type) => (
-                <Tab key={type} title={type} />
+                <Tab
+                  key={type}
+                  title={
+                    <div>
+                      <FontAwesomeIcon
+                        icon={
+                          type == "Horizontal"
+                            ? faGripHorizontal
+                            : faGripVertical
+                        }
+                        className="fas fa-check mr-2"
+                      ></FontAwesomeIcon>
+                      {type}
+                    </div>
+                  }
+                />
               ))}
             </Tabs>
             <Tabs
@@ -78,8 +98,8 @@ const EzSelect: React.FC = () => {
             </dl>
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <div className="mb-2 sectionTitle">
+        <div className="flex flex-col gap-5">
+          <div className="mb-0 sectionTitle">
             <span>Select a tag to enter a section.</span>
           </div>
           {sectionList.map((_, index) => (

@@ -12,6 +12,9 @@ import TagStep_List from "./TagStep_List";
 import TagStep_Table from "./TagStep_Table";
 import TagStep_Form from "./TagStep_Form";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTableList, faListCheck } from "@fortawesome/free-solid-svg-icons";
+
 interface Props {
   itemKey: number;
 }
@@ -60,10 +63,11 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
           </span>
           <input
             type="text"
-            className="w-full border-1 border-neutral-300 rounded h-[36px]"
+            className="w-full border-1 border-neutral-300 rounded h-[36px] px-2"
+            placeholder="Section Title"
           />
         </div>
-        <div className="flex mt-2">
+        <div className="flex mt-3">
           <Tabs
             color="success"
             radius="sm"
@@ -72,31 +76,48 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
             className="optTabs"
           >
             {tagTypes.map((type) => (
-              <Tab key={type} title={type} />
+              <Tab
+                key={type}
+                title={
+                  <div>
+                    <FontAwesomeIcon
+                      icon={
+                        type == "List"
+                          ? faBars
+                          : type == "Table"
+                          ? faTableList
+                          : faListCheck
+                      }
+                      className="fas fa-check mr-2"
+                    ></FontAwesomeIcon>
+                    {type}
+                  </div>
+                }
+              />
             ))}
           </Tabs>
+          {tagType === EzTagTypes.LIST && (
+            <TagStep_List
+              sectionData={sectionList[itemKey] as IListOptions}
+              setSectionList={setSectionList}
+              itemKey={itemKey}
+            />
+          )}
+          {tagType === EzTagTypes.TABLE && (
+            <TagStep_Table
+              sectionData={sectionList[itemKey] as ITableOptions}
+              setSectionList={setSectionList}
+              itemKey={itemKey}
+            />
+          )}
+          {tagType === EzTagTypes.FORM && (
+            <TagStep_Form
+              sectionData={sectionList[itemKey] as IFormOptions}
+              setSectionList={setSectionList}
+              itemKey={itemKey}
+            />
+          )}
         </div>
-        {tagType === EzTagTypes.LIST && (
-          <TagStep_List
-            sectionData={sectionList[itemKey] as IListOptions}
-            setSectionList={setSectionList}
-            itemKey={itemKey}
-          />
-        )}
-        {tagType === EzTagTypes.TABLE && (
-          <TagStep_Table
-            sectionData={sectionList[itemKey] as ITableOptions}
-            setSectionList={setSectionList}
-            itemKey={itemKey}
-          />
-        )}
-        {tagType === EzTagTypes.FORM && (
-          <TagStep_Form
-            sectionData={sectionList[itemKey] as IFormOptions}
-            setSectionList={setSectionList}
-            itemKey={itemKey}
-          />
-        )}
       </div>
     </>
   );
