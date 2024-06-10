@@ -1,5 +1,5 @@
 import { BasicDirectionTypes, IBasicLayout } from "@/types";
-import { Button, Tab, Tabs } from "@nextui-org/react";
+import { Button, Tab, Tabs, RadioGroup, Radio } from "@nextui-org/react";
 import { useEffect, useMemo, useState } from "react";
 import TagStep from "./TagStep";
 import { useAtom } from "jotai";
@@ -33,7 +33,7 @@ const EzSelect: React.FC = () => {
           <div className="mb-2 sectionTitle">
             <span>Select Page layout direction and number.</span>
           </div>
-          <div className="flex gap-3 px-2 mt-2">
+          <div className="flex items-center gap-3 px-2 mt-2">
             <Tabs
               color="success"
               onSelectionChange={(v: any) =>
@@ -62,18 +62,24 @@ const EzSelect: React.FC = () => {
                 />
               ))}
             </Tabs>
-            <Tabs
-              color="danger"
-              onSelectionChange={(v: any) =>
+            <RadioGroup
+              className="ml-3"
+              orientation="horizontal"
+              value={basicLayout.step}
+              onValueChange={(v: any) =>
                 setBasicLayout((preV) => {
                   return { ...preV, step: v };
                 })
               }
             >
-              <Tab key="1" title="1단" />
-              <Tab key="2" title="2단" />
-              <Tab key="3" title="3단" />
-            </Tabs>
+              <Radio value="1" className="mr-1">
+                1 Section
+              </Radio>
+              <Radio value="2" className="mr-1">
+                2 Section
+              </Radio>
+              <Radio value="3">3 Section</Radio>
+            </RadioGroup>
           </div>
         </div>
         <div className="flex flex-col gap-3 mb-5 border-b-1 pb-5 border-neutral-300 border-dashed">
