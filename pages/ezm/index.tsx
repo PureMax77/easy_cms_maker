@@ -29,7 +29,7 @@ export default function AiTest() {
         <EzSelect />
 
         <form
-          className="flex flex-row justify-start items-end w-full mb-9 mt-8"
+          className="flex flex-row justify-start items-end w-full mb-6 mt-6"
           onSubmit={onSubmit}
         >
           <div
@@ -49,12 +49,12 @@ export default function AiTest() {
             onChange={(e) => setUserContent(e.target.value)}
           /> */}
             <Button
-              size="md"
+              size="sm"
               isIconOnly
               className="absolute bottom-2 right-2 rounded-full border-3 border-black"
               type="submit"
               isLoading={isLoading}
-              style={{ background: "#2F88FF" }}
+              style={{ width: "38px", height: "38px", background: "#2F88FF" }}
             >
               <FontAwesomeIcon
                 icon={aiCode ? faPlus : faChevronDown}
@@ -69,7 +69,12 @@ export default function AiTest() {
             isIconOnly
             disabled={isLoading}
             onClick={onReset}
-            style={{ width: "45px", height: "45px", background: "#EFEFEF", marginBottom: "4px" }}
+            style={{
+              width: "45px",
+              height: "45px",
+              background: "#EFEFEF",
+              marginBottom: "4px",
+            }}
           >
             <FontAwesomeIcon
               icon={faArrowRotateRight}

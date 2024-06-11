@@ -112,7 +112,7 @@ const EzSelect: React.FC = () => {
             <TagStep key={index} itemKey={index} />
           ))}
         </div>
-        <div className="flex justify-end border-b-1 py-5 px-3 border-neutral-300 border-dashed">
+        <div className="text-right border-b-1 py-5 px-3 border-neutral-300 border-dashed">
           <Button
             className="w-[200px] text-white mb-2 border-2 border-sky-800 rounded-md text-lg"
             style={{ background: "#2F88FF" }}
