@@ -9,4 +9,5 @@
 
 .optNumber > div > div { min-height: inherit !important; }
 
+.promptBox > div { box-shadow: inherit; }
 .promptBox > div:hover { background-color: transparent !important; }

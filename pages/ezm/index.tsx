@@ -33,11 +33,11 @@ export default function AiTest() {
           onSubmit={onSubmit}
         >
           <div
-            className="relative flex flex-row items-end rounded-2xl max-w-screen-md w-full mr-3"
-            style={{ background: "#f4f4f5" }}
+            className="relative flex flex-row items-end max-w-screen-md w-full mr-3"
+            style={{ background: "#f4f4f5", borderRadius: "25px" }}
           >
             <Textarea
-              className="w-full rounded-2xl pl-1 pr-10 bg-transparent promptBox"
+              className="w-full rounded-2xl pl-2 pt-1 pb-1 pr-10 bg-transparent promptBox"
               placeholder="Please enter your request."
               value={userContent}
               onChange={(e) => setUserContent(e.target.value)}
@@ -51,14 +51,15 @@ export default function AiTest() {
             <Button
               size="md"
               isIconOnly
-              className="absolute bottom-1 right-1 rounded-full border-3 border-black"
+              className="absolute bottom-2 right-2 rounded-full border-3 border-black"
               type="submit"
               isLoading={isLoading}
               style={{ background: "#2F88FF" }}
             >
               <FontAwesomeIcon
                 icon={aiCode ? faPlus : faChevronDown}
-                className="text-white text-2xl"
+                className="text-white"
+                style={{ fontSize: "25px" }}
               ></FontAwesomeIcon>
               {/* {aiCode ? "추가 요청" : "요청"} */}
             </Button>
@@ -68,12 +69,11 @@ export default function AiTest() {
             isIconOnly
             disabled={isLoading}
             onClick={onReset}
-            style={{ width: "45px", height: "45px", background: "#EFEFEF" }}
+            style={{ width: "45px", height: "45px", background: "#EFEFEF", marginBottom: "4px" }}
           >
             <FontAwesomeIcon
               icon={faArrowRotateRight}
-              className={`text-2xl ${isLoading ? "" : ""}`}
-              style={{ color: "rgba(0,0,0,0.2)" }}
+              style={{ fontSize: "26px", color: "rgba(0,0,0,0.2)" }}
             ></FontAwesomeIcon>
           </Button>
         </form>
