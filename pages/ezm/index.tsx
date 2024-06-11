@@ -38,7 +38,7 @@ export default function AiTest() {
           >
             <Textarea
               className="w-full rounded-2xl pl-1 pr-10 bg-transparent promptBox"
-              placeholder="요청사항을 입력하세요."
+              placeholder="Please enter your request."
               value={userContent}
               onChange={(e) => setUserContent(e.target.value)}
             />
@@ -64,12 +64,11 @@ export default function AiTest() {
             </Button>
           </div>
           <Button
-            size="lg"
             radius="full"
             isIconOnly
             disabled={isLoading}
             onClick={onReset}
-            style={{ background: "#EFEFEF" }}
+            style={{ width: "45px", height: "45px", background: "#EFEFEF" }}
           >
             <FontAwesomeIcon
               icon={faArrowRotateRight}
