@@ -50,11 +50,11 @@ export default function AiTest() {
           /> */}
             <Button
               size="md"
-              color="primary"
               isIconOnly
-              className="absolute bottom-1 right-1 rounded-full border-4 border-sky-800"
+              className="absolute bottom-1 right-1 rounded-full border-3 border-black"
               type="submit"
               isLoading={isLoading}
+              style={{ background: "#2F88FF" }}
             >
               <FontAwesomeIcon
                 icon={aiCode ? faPlus : faChevronDown}

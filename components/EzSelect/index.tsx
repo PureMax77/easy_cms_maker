@@ -114,8 +114,8 @@ const EzSelect: React.FC = () => {
         </div>
         <div className="flex justify-end border-b-1 py-5 px-3 border-neutral-300 border-dashed">
           <Button
-            color="primary"
-            className="w-[200px] mb-2 border-2 border-sky-800 rounded-md text-lg"
+            className="w-[200px] text-white mb-2 border-2 border-sky-800 rounded-md text-lg"
+            style={{ background: "#2F88FF" }}
           >
             OK
           </Button>
