@@ -88,7 +88,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
                           ? faTableList
                           : faListCheck
                       }
-                      className="fas fa-check mr-2"
+                      className="mr-2"
                     ></FontAwesomeIcon>
                     {type}
                   </div>

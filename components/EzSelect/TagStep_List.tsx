@@ -67,7 +67,7 @@ const TagStep_List: React.FC<Props> = ({
                         ? faGripVertical
                         : faTableCells
                     }
-                    className="fas fa-check mr-2"
+                    className="mr-2"
                   ></FontAwesomeIcon>
                   {type}
                 </div>

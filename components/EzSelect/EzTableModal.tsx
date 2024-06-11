@@ -6,6 +6,8 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   isOpen: boolean;
@@ -16,7 +18,9 @@ interface Props {
 const EzTableModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
   return (
     <>
-      <Button onPress={onOpen}>Setting</Button>
+      <Button onPress={onOpen} isIconOnly size="sm">
+        <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
+      </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
