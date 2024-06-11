@@ -8,3 +8,5 @@
 .optTabs .bg-success { background-color: #E9F6DB; }
 
 .optNumber > div > div { min-height: inherit !important; }
+
+.promptBox > div:hover { background-color: transparent !important; }
