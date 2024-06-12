@@ -67,18 +67,21 @@ export default function AiTest() {
           <Button
             radius="full"
             isIconOnly
-            disabled={isLoading}
+            disabled={!aiCode}
             onClick={onReset}
+            className="bg-gray-200"
             style={{
               width: "45px",
               height: "45px",
-              background: "#EFEFEF",
               marginBottom: "4px",
             }}
           >
             <FontAwesomeIcon
               icon={faArrowRotateRight}
-              style={{ fontSize: "26px", color: "rgba(0,0,0,0.2)" }}
+              style={{
+                fontSize: "26px",
+                color: aiCode ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.2)",
+              }}
             ></FontAwesomeIcon>
           </Button>
         </form>

@@ -49,7 +49,7 @@ const TagStep_Table: React.FC<Props> = ({
           value={String(sectionData.columns)}
           onValueChange={(e) => onValueChange(e, "column")}
         />
-        <span className="mr-3 ml-1">Column</span>
+        <span className="mr-3 ml-1">Columns</span>
         <EzTableModal
           isOpen={isOpen}
           onOpen={onOpen}

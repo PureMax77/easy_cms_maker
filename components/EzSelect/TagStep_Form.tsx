@@ -34,7 +34,7 @@ const TagStep_Form: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex items-center px-5">
+      <div className="flex items-center px-8">
         <Input
           className="mr-1 w-[50px]"
           type="number"
@@ -42,7 +42,7 @@ const TagStep_Form: React.FC<Props> = ({
           value={String(sectionData.items)}
           onValueChange={(e) => onValueChange(e)}
         />
-        <span className="mr-3 ml-1">Item</span>
+        <span className="mr-3 ml-1">Input Forms</span>
         <EzFormModal
           isOpen={isOpen}
           onOpen={onOpen}

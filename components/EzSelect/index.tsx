@@ -28,7 +28,7 @@ const EzSelect: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col max-w-[1380px] justify-center w-full">
+      <div className="flex flex-col max-w-[1200px] justify-center w-full">
         <div className="flex flex-col mb-5 border-b-1 py-5 border-neutral-300 border-dashed">
           <div className="mb-2 sectionTitle">
             <span>Select Page layout direction and number.</span>

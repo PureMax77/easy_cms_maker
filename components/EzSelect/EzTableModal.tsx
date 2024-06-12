@@ -18,7 +18,7 @@ interface Props {
 const EzTableModal: React.FC<Props> = ({ isOpen, onOpen, onOpenChange }) => {
   return (
     <>
-      <Button onPress={onOpen} isIconOnly size="sm">
+      <Button onPress={onOpen} isIconOnly size="sm" className="bg-gray-200">
         <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>

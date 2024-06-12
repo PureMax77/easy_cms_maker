@@ -26,7 +26,7 @@ const CustomAceEditor: React.FC<IEditorProps> = ({ aiCode, setAiCode }) => {
       onChange={(newCode) => setAiCode(newCode)}
       fontSize={14}
       editorProps={{ $blockScrolling: true }}
-      height="500px"
+      height="1000px"
       width="100%"
     />
   );
