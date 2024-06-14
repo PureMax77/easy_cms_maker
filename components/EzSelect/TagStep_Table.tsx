@@ -1,7 +1,8 @@
 import { Checkbox, Input, useDisclosure } from "@nextui-org/react";
 import EzTableModal from "./EzTableModal";
 import { IColumnContent, ITableOptions } from "@/types";
-import { SectionListType, initColumnContent } from "@/store";
+import { SectionListType, initColumnContent, sectionListAtom } from "@/store";
+import { useAtom } from "jotai";
 
 interface Props {
   itemKey: number;
@@ -13,9 +14,12 @@ type ChangeType = "column" | "row_click" | "pagination" | "drag";
 
 const TagStep_Table: React.FC<Props> = ({
   itemKey,
-  sectionData,
-  setSectionList,
+  // sectionData,
+  // setSectionList,
 }) => {
+  const [sectionList, setSectionList] = useAtom(sectionListAtom);
+  const sectionData = sectionList[itemKey] as ITableOptions;
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const getNewColumnContents = (
@@ -26,12 +30,15 @@ const TagStep_Table: React.FC<Props> = ({
     if (type !== "column") return null;
 
     const preNumber = preSection.columns; // 이전 숫자
-    const newContents = preSection.columnContents;
+    const newContents = JSON.parse(JSON.stringify(preSection.columnContents));
 
     if (preNumber > nowNumber) {
       newContents.splice(nowNumber);
     } else if (preNumber < nowNumber) {
-      newContents.push(initColumnContent);
+      const addInitContents = new Array(nowNumber - preNumber).fill(
+        initColumnContent
+      );
+      newContents.push(...addInitContents);
     } else {
       return null;
     }
@@ -47,7 +54,8 @@ const TagStep_Table: React.FC<Props> = ({
     }
 
     setSectionList((preV: SectionListType) => {
-      const newList = [...preV];
+      let newList = JSON.parse(JSON.stringify(preV));
+
       const columnContents = getNewColumnContents(
         preV[itemKey] as ITableOptions,
         columnNumber,
@@ -62,7 +70,9 @@ const TagStep_Table: React.FC<Props> = ({
         ...(type === "pagination" && { isPagination: e }),
         ...(type === "drag" && { isDragDrop: e }),
       };
+
       newList[itemKey] = newSection;
+
       return newList;
     });
   };
@@ -71,6 +81,7 @@ const TagStep_Table: React.FC<Props> = ({
     <>
       <div className="flex items-center px-5 border-r-1">
         <Input
+          key={itemKey}
           className="mr-1"
           type="number"
           value={String(sectionData.columns)}

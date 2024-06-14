@@ -1,4 +1,4 @@
-import { sectionListAtom } from "@/store";
+import { SectionListType, sectionListAtom } from "@/store";
 import { ITableOptions, TableColumnType } from "@/types";
 import {
   Button,
@@ -22,6 +22,8 @@ interface Props {
   itemKey: number;
 }
 
+type ChangeType = "title" | "tag" | "click";
+
 const EzTableModal: React.FC<Props> = ({
   isOpen,
   onOpen,
@@ -36,6 +38,31 @@ const EzTableModal: React.FC<Props> = ({
     []
   );
 
+  const onValueChange = (e: any, type: ChangeType, index: number) => {
+    setSectionList((preV: SectionListType) => {
+      const newList = [...preV];
+      // const columnContents = getNewColumnContents(
+      //   preV[itemKey] as ITableOptions,
+      //   columnNumber,
+      //   type
+      // );
+
+      let newSection = newList[itemKey] as ITableOptions;
+      const newColumnContent = {
+        ...newSection.columnContents[index],
+        ...(type === "title" && { title: e }),
+        ...(type === "tag" && { tagType: e }),
+        ...(type === "click" && { clickEvent: e }),
+      };
+      const newColumnContents = newSection.columnContents;
+      newColumnContents[index] = newColumnContent;
+      newSection.columnContents = newColumnContents;
+
+      newList[itemKey] = newSection;
+      return newList;
+    });
+  };
+
   return (
     <>
       <Button onPress={onOpen}>Setting</Button>
@@ -46,7 +73,7 @@ const EzTableModal: React.FC<Props> = ({
               <ModalHeader className="flex flex-col gap-1">
                 Table Column
               </ModalHeader>
-              <ModalBody className=" px-6">
+              <ModalBody className="px-6">
                 <ul>
                   {columnContents.map((content, index) => (
                     <li
@@ -54,13 +81,31 @@ const EzTableModal: React.FC<Props> = ({
                       className="flex items-center text-nowrap gap-3 mb-3"
                     >
                       <span>- {index + 1} Column</span>
-                      <Input placeholder="Column Title" />
-                      <Select label="Select Tag Type" size="sm">
+                      <Input
+                        placeholder="Column Title"
+                        value={content.title}
+                        onChange={(e) =>
+                          onValueChange(e.target.value, "title", index)
+                        }
+                      />
+                      <Select
+                        label="Select Tag Type"
+                        size="sm"
+                        selectedKeys={[content.tagType]}
+                        onChange={(e) =>
+                          onValueChange(e.target.value, "tag", index)
+                        }
+                      >
                         {tableColumnType.map((type) => (
                           <SelectItem key={type}>{type}</SelectItem>
                         ))}
                       </Select>
-                      <Checkbox>Click Event</Checkbox>
+                      <Checkbox
+                        isSelected={content.clickEvent}
+                        onValueChange={(e) => onValueChange(e, "click", index)}
+                      >
+                        Click Event
+                      </Checkbox>
                     </li>
                   ))}
                 </ul>

@@ -17,9 +17,33 @@ const EzSelect: React.FC = () => {
     []
   );
 
-  useEffect(() => {
-    setSectionList(Array(Number(basicLayout.step)).fill(initListValue));
-  }, [basicLayout.step]);
+  const onStepChange = (v: any) => {
+    const preStep = Number(basicLayout.step);
+    const nowStep = Number(v);
+
+    if (nowStep > preStep) {
+      // step 증가
+      setSectionList((prev) => {
+        const newArray = prev;
+        const additionalData = Array(nowStep - preStep).fill(initListValue);
+        newArray.push(...additionalData);
+        return newArray;
+      });
+    } else if (preStep > nowStep) {
+      // step 감소
+      setSectionList((prev) => {
+        const newArray = prev;
+        newArray.splice(nowStep - preStep);
+        return newArray;
+      });
+    } else {
+      return;
+    }
+
+    setBasicLayout((preV) => {
+      return { ...preV, step: v };
+    });
+  };
 
   return (
     <div className="flex flex-col justify-center w-full">
@@ -42,11 +66,7 @@ const EzSelect: React.FC = () => {
           <Tabs
             color="danger"
             radius="sm"
-            onSelectionChange={(v: any) =>
-              setBasicLayout((preV) => {
-                return { ...preV, step: v };
-              })
-            }
+            onSelectionChange={(v: any) => onStepChange(v)}
           >
             <Tab key="1" title="1단" />
             <Tab key="2" title="2단" />
