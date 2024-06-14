@@ -90,11 +90,7 @@ const EzSelect: React.FC = () => {
               className="ml-3"
               orientation="horizontal"
               value={basicLayout.step}
-              onValueChange={(v: any) =>
-                setBasicLayout((preV) => {
-                  return { ...preV, step: v };
-                })
-              }
+              onValueChange={(v: any) => onStepChange(v)}
             >
               <Radio value="1" className="mr-1">
                 1 Section

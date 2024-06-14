@@ -7,7 +7,9 @@ import { useState } from "react";
 import Container from "@/components/Conatiner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRotateRight, faChevronDown, faPlus
+  faArrowRotateRight,
+  faChevronDown,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function AiTest() {
