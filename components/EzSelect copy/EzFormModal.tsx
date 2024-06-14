@@ -12,8 +12,6 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useAtom } from "jotai";
 import { useMemo } from "react";
 
@@ -67,10 +65,8 @@ const EzFormModal: React.FC<Props> = ({
 
   return (
     <>
-      <Button onPress={onOpen} isIconOnly size="sm" className="bg-gray-200">
-        <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Button onPress={onOpen}>Setting</Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
           {(onClose) => (
             <>

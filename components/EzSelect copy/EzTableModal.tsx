@@ -1,5 +1,5 @@
 import { SectionListType, sectionListAtom } from "@/store";
-import { FormItemType, IFormOptions } from "@/types";
+import { ITableOptions, TableColumnType } from "@/types";
 import {
   Button,
   Checkbox,
@@ -12,8 +12,6 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { useAtom } from "jotai";
 import { useMemo } from "react";
 
@@ -24,19 +22,19 @@ interface Props {
   itemKey: number;
 }
 
-type ChangeType = "label" | "tag" | "required";
+type ChangeType = "title" | "tag" | "click";
 
-const EzFormModal: React.FC<Props> = ({
+const EzTableModal: React.FC<Props> = ({
   isOpen,
   onOpen,
   onOpenChange,
   itemKey,
 }) => {
   const [sectionList, setSectionList] = useAtom(sectionListAtom);
-  const nowSection = sectionList[itemKey] as IFormOptions;
-  const itemContents = nowSection.itemsContents;
-  const tableColumnType: FormItemType[] = useMemo(
-    () => Object.values(FormItemType),
+  const nowSection = sectionList[itemKey] as ITableOptions;
+  const columnContents = nowSection.columnContents;
+  const tableColumnType: TableColumnType[] = useMemo(
+    () => Object.values(TableColumnType),
     []
   );
 
@@ -49,16 +47,16 @@ const EzFormModal: React.FC<Props> = ({
       //   type
       // );
 
-      let newSection = newList[itemKey] as IFormOptions;
+      let newSection = newList[itemKey] as ITableOptions;
       const newColumnContent = {
-        ...newSection.itemsContents[index],
-        ...(type === "label" && { label: e }),
+        ...newSection.columnContents[index],
+        ...(type === "title" && { title: e }),
         ...(type === "tag" && { tagType: e }),
-        ...(type === "required" && { required: e }),
+        ...(type === "click" && { clickEvent: e }),
       };
-      const newColumnContents = newSection.itemsContents;
+      const newColumnContents = newSection.columnContents;
       newColumnContents[index] = newColumnContent;
-      newSection.itemsContents = newColumnContents;
+      newSection.columnContents = newColumnContents;
 
       newList[itemKey] = newSection;
       return newList;
@@ -67,29 +65,27 @@ const EzFormModal: React.FC<Props> = ({
 
   return (
     <>
-      <Button onPress={onOpen} isIconOnly size="sm" className="bg-gray-200">
-        <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Button onPress={onOpen}>Setting</Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Form Item
+                Table Column
               </ModalHeader>
               <ModalBody className="px-6">
                 <ul>
-                  {itemContents.map((content, index) => (
+                  {columnContents.map((content, index) => (
                     <li
                       key={index}
                       className="flex items-center text-nowrap gap-3 mb-3"
                     >
-                      <span>- {index + 1} Item</span>
+                      <span>- {index + 1} Column</span>
                       <Input
-                        placeholder="Label"
-                        value={content.label}
+                        placeholder="Column Title"
+                        value={content.title}
                         onChange={(e) =>
-                          onValueChange(e.target.value, "label", index)
+                          onValueChange(e.target.value, "title", index)
                         }
                       />
                       <Select
@@ -105,12 +101,10 @@ const EzFormModal: React.FC<Props> = ({
                         ))}
                       </Select>
                       <Checkbox
-                        isSelected={content.required}
-                        onValueChange={(e) =>
-                          onValueChange(e, "required", index)
-                        }
+                        isSelected={content.clickEvent}
+                        onValueChange={(e) => onValueChange(e, "click", index)}
                       >
-                        Required
+                        Click Event
                       </Checkbox>
                     </li>
                   ))}
@@ -132,4 +126,4 @@ const EzFormModal: React.FC<Props> = ({
   );
 };
 
-export default EzFormModal;
+export default EzTableModal;
