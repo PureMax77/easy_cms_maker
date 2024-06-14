@@ -40,6 +40,7 @@ const TagStep_Table: React.FC<Props> = ({
       );
       newContents.push(...addInitContents);
     } else {
+      // column말고 다른 데이터 바뀔때 필요
       return null;
     }
 

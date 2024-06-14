@@ -40,7 +40,7 @@ const EzTableModal: React.FC<Props> = ({
 
   const onValueChange = (e: any, type: ChangeType, index: number) => {
     setSectionList((preV: SectionListType) => {
-      const newList = [...preV];
+      const newList = JSON.parse(JSON.stringify(preV));
       // const columnContents = getNewColumnContents(
       //   preV[itemKey] as ITableOptions,
       //   columnNumber,

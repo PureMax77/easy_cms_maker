@@ -1,7 +1,7 @@
 import { Input, useDisclosure } from "@nextui-org/react";
 import EzFormModal from "./EzFormModal";
-import { IFormOptions } from "@/types";
-import { SectionListType } from "@/store";
+import { IFormContent, IFormOptions } from "@/types";
+import { SectionListType, initItemContent } from "@/store";
 
 interface Props {
   itemKey: number;
@@ -16,18 +16,48 @@ const TagStep_Form: React.FC<Props> = ({
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const getNewItemContents = (
+    preSection: IFormOptions,
+    nowNumber: number // 현재 입력된 숫자
+  ): IFormContent[] | null => {
+    const preNumber = preSection.items; // 이전 숫자
+    const newContents = JSON.parse(JSON.stringify(preSection.itemsContents));
+
+    if (preNumber > nowNumber) {
+      newContents.splice(nowNumber);
+    } else if (preNumber < nowNumber) {
+      const addInitContents = new Array(nowNumber - preNumber).fill(
+        initItemContent
+      );
+      newContents.push(...addInitContents);
+    } else {
+      return null;
+    }
+
+    return newContents;
+  };
+
   const onValueChange = (e: any) => {
     // item 변경 시 value check
     let itemNumber = Number(e);
     itemNumber = itemNumber < 1 ? 1 : Math.floor(itemNumber);
 
     setSectionList((preV: SectionListType) => {
-      const newList = [...preV];
+      let newList = JSON.parse(JSON.stringify(preV));
+
+      const itemsContents = getNewItemContents(
+        preV[itemKey] as IFormOptions,
+        itemNumber
+      );
+
       const newSection = {
         ...newList[itemKey],
         items: itemNumber,
+        itemsContents,
       };
+
       newList[itemKey] = newSection;
+
       return newList;
     });
   };
@@ -46,6 +76,7 @@ const TagStep_Form: React.FC<Props> = ({
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
+          itemKey={itemKey}
         />
       </div>
     </>
