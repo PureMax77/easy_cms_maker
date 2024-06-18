@@ -91,3 +91,8 @@ export interface IFormOptions {
   items: number;
   itemsContents: IFormContent[];
 }
+
+export interface IPageBasicInfo {
+  title: string;
+  description: string;
+}

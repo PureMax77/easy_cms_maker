@@ -1,9 +1,12 @@
 import {
+  BasicDirectionTypes,
   EzListLayoutTypes,
   EzTagTypes,
   FormItemType,
+  IBasicLayout,
   IFormOptions,
   IListOptions,
+  IPageBasicInfo,
   ITableOptions,
   TableColumnType,
 } from "@/types";
@@ -50,3 +53,13 @@ export const initFormValue: IFormOptions = {
 export type SectionListType = (IListOptions | ITableOptions | IFormOptions)[];
 
 export const sectionListAtom = atom<SectionListType>([initListValue]);
+
+export const basicLayoutAtom = atom<IBasicLayout>({
+  direction: BasicDirectionTypes.HORIZONTAL,
+  step: "1",
+});
+
+export const basicInfoAtom = atom<IPageBasicInfo>({
+  title: "",
+  description: "",
+});

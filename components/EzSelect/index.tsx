@@ -3,19 +3,24 @@ import { Button, Tab, Tabs, RadioGroup, Radio } from "@nextui-org/react";
 import { useEffect, useMemo, useState } from "react";
 import TagStep from "./TagStep";
 import { useAtom } from "jotai";
-import { initListValue, sectionListAtom } from "@/store";
+import {
+  basicInfoAtom,
+  basicLayoutAtom,
+  initListValue,
+  sectionListAtom,
+} from "@/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripHorizontal,
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 
+type ChangeType = "title" | "description";
+
 const EzSelect: React.FC = () => {
   const [sectionList, setSectionList] = useAtom(sectionListAtom);
-  const [basicLayout, setBasicLayout] = useState<IBasicLayout>({
-    direction: BasicDirectionTypes.HORIZONTAL,
-    step: "1",
-  });
+  const [basicLayout, setBasicLayout] = useAtom(basicLayoutAtom);
+  const [basicInfo, setBasicInfo] = useAtom(basicInfoAtom);
 
   const directionTypes: BasicDirectionTypes[] = useMemo(
     () => Object.values(BasicDirectionTypes),
@@ -29,7 +34,7 @@ const EzSelect: React.FC = () => {
     if (nowStep > preStep) {
       // step 증가
       setSectionList((prev) => {
-        const newArray = prev;
+        const newArray = JSON.parse(JSON.stringify(prev));
         const additionalData = Array(nowStep - preStep).fill(initListValue);
         newArray.push(...additionalData);
         return newArray;
@@ -37,7 +42,7 @@ const EzSelect: React.FC = () => {
     } else if (preStep > nowStep) {
       // step 감소
       setSectionList((prev) => {
-        const newArray = prev;
+        const newArray = JSON.parse(JSON.stringify(prev));
         newArray.splice(nowStep - preStep);
         return newArray;
       });
@@ -47,6 +52,18 @@ const EzSelect: React.FC = () => {
 
     setBasicLayout((preV) => {
       return { ...preV, step: v };
+    });
+  };
+
+  const onInfoChange = (e: any, type: ChangeType) => {
+    setBasicInfo((preV) => {
+      const newV = JSON.parse(JSON.stringify(preV));
+
+      return {
+        ...newV,
+        ...(type === "title" && { title: e }),
+        ...(type === "description" && { description: e }),
+      };
     });
   };
 
@@ -113,13 +130,18 @@ const EzSelect: React.FC = () => {
                 <input
                   type="text"
                   className="w-full border-1 border-neutral-300 rounded h-[36px]"
+                  // value={}
+                  onChange={(e) => onInfoChange(e.target.value, "title")}
                 />
               </dd>
             </dl>
             <dl className="flex flex-row w-full gap-3 mt-2">
               <dt className="w-[275px] font-medium">Page Description</dt>
               <dd className="w-full">
-                <textarea className="w-full border-1 border-neutral-300 rounded h-[74px]" />
+                <textarea
+                  className="w-full border-1 border-neutral-300 rounded h-[74px]"
+                  onChange={(e) => onInfoChange(e.target.value, "description")}
+                />
               </dd>
             </dl>
           </div>
