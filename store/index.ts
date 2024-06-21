@@ -63,3 +63,5 @@ export const basicInfoAtom = atom<IPageBasicInfo>({
   title: "",
   description: "",
 });
+
+export const promptAtom = atom<string>("");
