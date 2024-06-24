@@ -20,6 +20,12 @@ const CustomSandPack: React.FC<ISandProps> = ({ aiCode, setAiCode }) => {
       style={{ width: "100%" }}
       template="react-ts"
       options={{ externalResources: ["https://cdn.tailwindcss.com"] }}
+      customSetup={{
+        dependencies: {
+          "react-dnd": "latest",
+          "react-dnd-html5-backend": "latest",
+        },
+      }}
       files={{
         "/App.tsx": {
           code: aiCode ? `${aiCode}` : SandPack_Default_Code,

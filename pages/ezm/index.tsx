@@ -3,22 +3,25 @@ import CustomSandPack from "@/components/sandPack/CustomSandPack";
 import useOpenAi from "@/hooks/useOpenAi";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { Button, Input, Textarea } from "@nextui-org/react";
-import { useState } from "react";
 import Container from "@/components/Conatiner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRotateRight, faChevronDown, faPlus
+  faArrowRotateRight,
+  faChevronDown,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAtom } from "jotai";
+import { promptAtom } from "@/store";
 
 export default function AiTest() {
   const { getAiCode, aiCode, setAiCode, isLoading, onReset } = useOpenAi();
 
-  const [userContent, setUserContent] = useState<string>("");
+  const [promptContent, setPromptContent] = useAtom(promptAtom);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    getAiCode(userContent).then(() => {
-      setUserContent("");
+    getAiCode(promptContent).then(() => {
+      setPromptContent("");
     });
   };
 
@@ -39,8 +42,10 @@ export default function AiTest() {
             <Textarea
               className="w-full rounded-2xl pl-2 pt-1 pb-1 pr-10 bg-transparent promptBox"
               placeholder="Please enter your request."
-              value={userContent}
-              onChange={(e) => setUserContent(e.target.value)}
+              value={promptContent}
+              size="lg"
+              maxRows={100}
+              onChange={(e) => setPromptContent(e.target.value)}
             />
             {/* <Input
             className="mr-3 max-w-screen-md w-full"

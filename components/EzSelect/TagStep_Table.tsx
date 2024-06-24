@@ -1,7 +1,8 @@
 import { Checkbox, Input, useDisclosure } from "@nextui-org/react";
 import EzTableModal from "./EzTableModal";
-import { ITableOptions } from "@/types";
-import { SectionListType } from "@/store";
+import { IColumnContent, ITableOptions } from "@/types";
+import { SectionListType, initColumnContent, sectionListAtom } from "@/store";
+import { useAtom } from "jotai";
 
 interface Props {
   itemKey: number;
@@ -13,12 +14,43 @@ type ChangeType = "column" | "row_click" | "pagination" | "drag";
 
 const TagStep_Table: React.FC<Props> = ({
   itemKey,
-  sectionData,
-  setSectionList,
+  // sectionData,
+  // setSectionList,
 }) => {
+  const [sectionList, setSectionList] = useAtom(sectionListAtom);
+  const sectionData = sectionList[itemKey] as ITableOptions;
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const getNewColumnContents = (
+    preSection: ITableOptions,
+    nowNumber: number, // 현재 입력된 숫자
+    type: ChangeType
+  ): IColumnContent[] | null => {
+    if (type !== "column") return null;
+
+    const preNumber = preSection.columns; // 이전 숫자
+    const newContents = JSON.parse(JSON.stringify(preSection.columnContents));
+
+    if (preNumber > nowNumber) {
+      newContents.splice(nowNumber);
+    } else if (preNumber < nowNumber) {
+      const addInitContents = new Array(nowNumber - preNumber).fill(
+        initColumnContent
+      );
+      newContents.push(...addInitContents);
+    } else {
+      // column말고 다른 데이터 바뀔때 필요
+      return null;
+    }
+
+    return newContents;
+  };
+
   const onValueChange = (e: any, type: ChangeType) => {
+    // fail check
+    if (!e || e === "0") return;
+
     // column 변경 시 value check
     let columnNumber = Number(e);
     if (type === "column") {
@@ -26,15 +58,25 @@ const TagStep_Table: React.FC<Props> = ({
     }
 
     setSectionList((preV: SectionListType) => {
-      const newList = [...preV];
+      let newList = JSON.parse(JSON.stringify(preV));
+
+      const columnContents = getNewColumnContents(
+        preV[itemKey] as ITableOptions,
+        columnNumber,
+        type
+      );
+
       const newSection = {
         ...newList[itemKey],
         ...(type === "column" && { columns: columnNumber }),
+        ...(type === "column" && columnContents && { columnContents }),
         ...(type === "row_click" && { isRowClick: e }),
         ...(type === "pagination" && { isPagination: e }),
         ...(type === "drag" && { isDragDrop: e }),
       };
+
       newList[itemKey] = newSection;
+
       return newList;
     });
   };
@@ -44,6 +86,7 @@ const TagStep_Table: React.FC<Props> = ({
       <div className="flex items-center px-8 border-r-1">
         <Input
           className="mr-1 w-[50px]"
+          key={itemKey}
           type="number"
           size="sm"
           value={String(sectionData.columns)}
@@ -54,6 +97,7 @@ const TagStep_Table: React.FC<Props> = ({
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
+          itemKey={itemKey}
         />
       </div>
       <div className="flex items-center px-8 gap-5">

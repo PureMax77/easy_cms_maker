@@ -13,7 +13,11 @@ import TagStep_Table from "./TagStep_Table";
 import TagStep_Form from "./TagStep_Form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTableList, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faTableList,
+  faListCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   itemKey: number;
@@ -32,7 +36,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
 
   const onTagTypeChange = (e: any) => {
     setSectionList((preV) => {
-      const newList = [...preV];
+      const newList = JSON.parse(JSON.stringify(preV));
       const initValue = initListBox.find((v) => v.kind === e) || initListValue;
       newList[itemKey] = initValue;
 
@@ -42,13 +46,14 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
     setTagType(e);
   };
 
-  const onTitleChange = (e: string) => {
+  const onTitleChange = (e: any) => {
     setSectionList((preV) => {
-      const newList = [...preV];
+      const newList = JSON.parse(JSON.stringify(preV));
       const newSection = {
         ...newList[itemKey],
-        title: e,
+        title: e.target.value,
       };
+
       newList[itemKey] = newSection;
       return newList;
     });
@@ -65,6 +70,8 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
             type="text"
             className="w-full border-1 border-neutral-300 rounded h-[36px] px-2"
             placeholder="Section Title"
+            value={sectionList[itemKey].title}
+            onChange={onTitleChange}
           />
         </div>
         <div className="flex mt-3">

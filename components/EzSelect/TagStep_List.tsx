@@ -1,14 +1,12 @@
 import { SectionListType } from "@/store";
 import { EzListLayoutTypes, IListOptions } from "@/types";
-import {
-  Checkbox,
-  Tab,
-  Tabs,
-} from "@nextui-org/react";
+import { Checkbox, Tab, Tabs } from "@nextui-org/react";
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGripHorizontal, faGripVertical, faTableCells
+  faGripHorizontal,
+  faGripVertical,
+  faTableCells,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
@@ -31,7 +29,7 @@ const TagStep_List: React.FC<Props> = ({
 
   const onValueChange = (e: any, type: ChangeType) => {
     setSectionList((preV: SectionListType) => {
-      const newList = [...preV];
+      const newList = JSON.parse(JSON.stringify(preV));
       const newSection = {
         ...newList[itemKey],
         ...(type === "layout" && { layout: e }),
