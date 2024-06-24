@@ -24,6 +24,8 @@ const CustomSandPack: React.FC<ISandProps> = ({ aiCode, setAiCode }) => {
         dependencies: {
           "react-dnd": "latest",
           "react-dnd-html5-backend": "latest",
+          "react-beautiful-dnd": "latest",
+          "immutability-helper": "latest",
         },
       }}
       files={{

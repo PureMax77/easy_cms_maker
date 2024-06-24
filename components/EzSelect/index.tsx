@@ -72,7 +72,11 @@ const EzSelect: React.FC = () => {
   const onSetPrompt = () => {
     const titleInfo = `- title of the page : ${basicInfo.title}\n`;
     const descInfo = `- description of the page : ${basicInfo.description}\n\n`;
-    const layoutInfo = `- The overall layout of the page : an application with ${basicLayout.step} ${basicLayout.direction} stacked sections?\n\n`;
+    const layoutInfo = `- The overall layout of the page : an application with ${
+      basicLayout.step
+    } ${
+      basicLayout.step !== "1" ? basicLayout.direction + " " : ""
+    }stacked sections\n\n`;
 
     const sectionInfo = sectionList
       .map((section, index) => {
@@ -197,36 +201,8 @@ const EzSelect: React.FC = () => {
             <span>Select Page layout direction and number.</span>
           </div>
           <div className="flex items-center gap-3 px-2 mt-2">
-            <Tabs
-              color="success"
-              onSelectionChange={(v: any) =>
-                setBasicLayout((preV) => {
-                  return { ...preV, direction: v };
-                })
-              }
-              className="optTabs"
-            >
-              {directionTypes.map((type) => (
-                <Tab
-                  key={type}
-                  title={
-                    <div>
-                      <FontAwesomeIcon
-                        icon={
-                          type == "Horizontal"
-                            ? faGripHorizontal
-                            : faGripVertical
-                        }
-                        className="mr-2"
-                      ></FontAwesomeIcon>
-                      {type}
-                    </div>
-                  }
-                />
-              ))}
-            </Tabs>
             <RadioGroup
-              className="ml-3"
+              className="mr-3 h-9"
               orientation="horizontal"
               value={basicLayout.step}
               onValueChange={(v: any) => onStepChange(v)}
@@ -239,6 +215,36 @@ const EzSelect: React.FC = () => {
               </Radio>
               <Radio value="3">3 Section</Radio>
             </RadioGroup>
+            {Number(basicLayout.step) > 1 && (
+              <Tabs
+                color="success"
+                onSelectionChange={(v: any) =>
+                  setBasicLayout((preV) => {
+                    return { ...preV, direction: v };
+                  })
+                }
+                className="optTabs"
+              >
+                {directionTypes.map((type) => (
+                  <Tab
+                    key={type}
+                    title={
+                      <div>
+                        <FontAwesomeIcon
+                          icon={
+                            type == "Horizontal"
+                              ? faGripHorizontal
+                              : faGripVertical
+                          }
+                          className="mr-2"
+                        ></FontAwesomeIcon>
+                        {type}
+                      </div>
+                    }
+                  />
+                ))}
+              </Tabs>
+            )}
           </div>
         </div>
 
