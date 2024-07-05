@@ -22,7 +22,7 @@ const TagStep_Form: React.FC<Props> = ({
   ): IFormContent[] | null => {
     const preNumber = preSection.items; // 이전 숫자
     const newContents = JSON.parse(JSON.stringify(preSection.itemsContents));
-    console.log(123, preSection, nowNumber, newContents);
+
     if (preNumber > nowNumber) {
       newContents.splice(nowNumber);
     } else if (preNumber < nowNumber) {
