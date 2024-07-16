@@ -202,7 +202,8 @@ const EzSelect: React.FC = () => {
           </div>
           <div className="flex items-center gap-3 px-2 mt-2">
             <RadioGroup
-              className="mr-3 h-9"
+              style={{ minHeight: "34px", justifyContent: "center" }}
+              className="mr-3"
               orientation="horizontal"
               value={basicLayout.step}
               onValueChange={(v: any) => onStepChange(v)}
@@ -213,7 +214,9 @@ const EzSelect: React.FC = () => {
               <Radio value="2" className="mr-1">
                 2 Section
               </Radio>
-              <Radio value="3">3 Section</Radio>
+              <Radio value="3">
+                3 Section
+              </Radio>
             </RadioGroup>
             {Number(basicLayout.step) > 1 && (
               <Tabs

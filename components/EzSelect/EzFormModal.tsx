@@ -74,19 +74,20 @@ const EzFormModal: React.FC<Props> = ({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 border-y-1">
                 Form Item
               </ModalHeader>
-              <ModalBody className="px-6">
-                <ul>
+              <ModalBody className="px-6 mt-3">
+                <ul className="modal-form">
                   {itemContents.map((content, index) => (
                     <li
                       key={index}
                       className="flex items-center text-nowrap gap-3 mb-3"
                     >
-                      <span>- {index + 1} Item</span>
+                      <span className="title">{index + 1} Item</span>
                       <Input
                         placeholder="Label"
+                        className="w-full border-1 border-neutral-300 rounded-md h-[48px] input"
                         value={content.label}
                         onChange={(e) =>
                           onValueChange(e.target.value, "label", index)
@@ -94,6 +95,7 @@ const EzFormModal: React.FC<Props> = ({
                       />
                       <Select
                         label="Select Tag Type"
+                        className="rounded w-[450px]"
                         size="sm"
                         selectedKeys={[content.tagType]}
                         onChange={(e) =>
@@ -117,10 +119,11 @@ const EzFormModal: React.FC<Props> = ({
                 </ul>
               </ModalBody>
               <ModalFooter>
-                {/* <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button> */}
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  className="w-[120px] text-white mb-2 border-2 border-sky-800 rounded-md text-lg"
+                  style={{ background: "#2F88FF" }}
+                  onPress={onClose}
+                >
                   OK
                 </Button>
               </ModalFooter>
