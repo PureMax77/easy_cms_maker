@@ -20,35 +20,12 @@ export default function AiTest() {
   return (
     <Container>
       <h1 className="text-3xl font-bold tracking-tight">CMS Setup</h1>
-      <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-        <form
-          className="flex flex-row justify-center w-full mx-auto"
-          onSubmit={onSubmit}
-        >
-          <Input
-            className="mr-2 max-w-screen-md w-full"
-            placeholder="요청사항을 입력하세요."
-            value={userContent}
-            onChange={(e) => setUserContent(e.target.value)}
-          />
-          <Button type="submit" isLoading={isLoading}>
-            {aiCode ? "추가 요청" : "요청"}
-          </Button>
-        </form>
-
-        <div className="w-full">
-          <Sandpack
-            template="react-ts"
-            options={{
-              externalResources: ["https://cdn.tailwindcss.com"],
-              editorHeight: 600,
-            }}
-            files={{
-              "/App.tsx": {
-                code: aiCode ? `${aiCode}` : SandPack_Default_Code,
-              },
-            }}
-          />
+      <div className="flex flex-col max-w-[1200px] justify-center w-full">
+        <div className="flex flex-col gap-3 mt-5 border-b-1 py-5 border-neutral-300 border-dashed">
+          <div className="mb-2 sectionTitle">
+            <span>Setup</span>
+          </div>
+          <div className="px-3">sdfsdfsfdsddfsfd</div>
         </div>
       </div>
     </Container>

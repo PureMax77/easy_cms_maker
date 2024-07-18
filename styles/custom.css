@@ -22,3 +22,11 @@ section[role="dialog"] button[aria-label="Close"] {
   content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; 
   background-color: #60BA05; border-radius: 50%; 
 }
+
+
+.token-list { border: 1px solid #d4d4d4; }
+.token-list thead tr { background: #cae0ff; }
+.token-list thead th { padding: 0.5rem; border: 1px solid #a5c7f6; }
+.token-list tbody tr { font-size: 0.875rem; line-height: 1.25rem; }
+.token-list tbody tr:hover { background-color: #f1f5f9; }
+.token-list tbody td { padding: 0.5rem; border: 1px solid #d4d4d4; }

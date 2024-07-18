@@ -13,12 +13,12 @@ export const siteConfig = {
       href: "/codemaker",
     },
     {
-      label: "Exchange",
-      href: "/exchange",
-    },
-    {
       label: "Token",
       href: "/token",
+    },
+    {
+      label: "Exchange",
+      href: "/exchange",
     },
   ],
   navMenuItems: [
@@ -31,12 +31,12 @@ export const siteConfig = {
       href: "/codemaker",
     },
     {
-      label: "Exchange",
-      href: "/exchange",
-    },
-    {
       label: "Token",
       href: "/token",
+    },
+    {
+      label: "Exchange",
+      href: "/exchange",
     },
   ],
   links: {

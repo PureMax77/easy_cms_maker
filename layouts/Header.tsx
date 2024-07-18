@@ -47,10 +47,7 @@ const Header: React.FC = () => {
           </span>
         </NavbarBrand>
         <div className="ml-14 flex flex-row w-full h-[40px] bg-white items-center">
-          <NavbarContent
-            className="md:flex items-center"
-            justify="start"
-          >
+          <NavbarContent className="md:flex items-center" justify="start">
             <NavbarItem
               className={
                 isActive("setup")
@@ -85,6 +82,22 @@ const Header: React.FC = () => {
             </NavbarItem>
             <NavbarItem
               className={
+                isActive("token")
+                  ? "w-[220px] py-2 px-4 rounded-lg bg-slate-100"
+                  : "w-[220px] py-2 px-4 rounded-lg"
+              }
+            >
+              <Link className={btnClass} onClick={() => router.push("/token")}>
+                <Image
+                  src={"/images/ic_token.png"}
+                  className="rounded-none"
+                  alt="Token"
+                />
+                Token
+              </Link>
+            </NavbarItem>
+            <NavbarItem
+              className={
                 isActive("exchange")
                   ? "w-[220px] py-2 px-4 rounded-lg bg-slate-100"
                   : "w-[220px] py-2 px-4 rounded-lg"
@@ -100,22 +113,6 @@ const Header: React.FC = () => {
                   alt="Exchange"
                 />
                 Exchange
-              </Link>
-            </NavbarItem>
-            <NavbarItem
-              className={
-                isActive("token")
-                  ? "w-[220px] py-2 px-4 rounded-lg bg-slate-100"
-                  : "w-[220px] py-2 px-4 rounded-lg"
-              }
-            >
-              <Link className={btnClass} onClick={() => router.push("/token")}>
-                <Image
-                  src={"/images/ic_token.png"}
-                  className="rounded-none"
-                  alt="Token"
-                />
-                Token
               </Link>
             </NavbarItem>
           </NavbarContent>
