@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useCoinMarketCap from "@/hooks/useCoinMarketCap";
-import { Button, Image } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 import Container from "@/components/Conatiner";
 import { numUnit } from "@/utils/number";
 import { lessThenText } from "@/utils/numberUtils";
@@ -9,20 +9,21 @@ export default function AiTest() {
   const getExchangeList = useCoinMarketCap();
   const [list, setList] = useState([]);
 
-  const getList = () => {
+  const getList = (target: string) => {
     getExchangeList({
+      target: target,
       start: "1",
       limit: "100",
       convert: "KRW",
     }).then((list) => {
       // console.log(list);
 
-      setList(list.summary.data);
+      if (list.summary) setList(list.summary.data);
     });
   };
 
   useEffect(() => {
-    getList();
+    getList("tickers");
   }, []);
 
   const TokenList = ({ token, index }: { token: any; index: number }) => {

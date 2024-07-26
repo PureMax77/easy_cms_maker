@@ -12,7 +12,7 @@ export default async function handler(
   const CoinMarketCap = require("coinmarketcap-api");
 
   // parameter
-  const { start, limit, convert } = req.query;
+  const { target, start, limit, convert, sort, id, slug, aux } = req.query;
   // console.log(start, limit, convert);
 
   const apiKey = process.env.NEXT_PUBLIC_COINMARKETCAP_KEY;
@@ -20,11 +20,30 @@ export default async function handler(
 
   try {
     // console.log("start Summarize");
-    const result = await client.getTickers({
-      start,
-      limit,
-      convert,
-    });
+    let result;
+    switch (target) {
+      case "tickers":
+        result = await client.getTickers({
+          start,
+          limit,
+          convert,
+        });
+        break;
+      case "exchange":
+        result = await client.getExchange({
+          sort,
+          limit,
+        });
+        break;
+      case "exchangeInfo":
+        result = await client.getExchangeInfo({
+          id,
+          slug,
+          aux,
+        });
+        break;
+    }
+    
     res.status(200).json({ summary: result || "" });
   } catch (error) {
     console.error("Error:", error);
