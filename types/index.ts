@@ -47,7 +47,7 @@ export enum TableColumnType {
   IMAGE = "Image",
   CHECKBOX = "Checkbox",
   RADIO = "Radio",
-  SWITCH = "Switch",
+  // SWITCH = "Switch",
   SELECTBOX = "Selectbox",
   BUTTON = "Button",
 }
@@ -58,7 +58,7 @@ export enum FormItemType {
   IMAGE = "Image",
   CHECKBOX = "Checkbox",
   RADIO = "Radio",
-  SWITCH = "Switch",
+  // SWITCH = "Switch",
   SELECTBOX = "Selectbox",
   BUTTON = "Button",
 }
@@ -78,6 +78,7 @@ export interface IFormContent {
 export interface ITableOptions {
   kind: EzTagTypes.TABLE;
   title: string;
+  samples: number;
   columns: number;
   columnContents: IColumnContent[];
   isRowClick: boolean;

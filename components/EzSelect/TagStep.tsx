@@ -80,7 +80,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
             radius="sm"
             selectedKey={sectionList[itemKey].kind}
             onSelectionChange={onTagTypeChange}
-            className="optTabs"
+            className="optTabs mr-4"
           >
             {tagTypes.map((type) => (
               <Tab

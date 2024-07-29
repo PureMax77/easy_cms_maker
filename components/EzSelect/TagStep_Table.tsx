@@ -10,7 +10,7 @@ interface Props {
   setSectionList: Function;
 }
 
-type ChangeType = "column" | "row_click" | "pagination" | "drag";
+type ChangeType = "sample" | "column" | "row_click" | "pagination" | "drag";
 
 const TagStep_Table: React.FC<Props> = ({
   itemKey,
@@ -53,8 +53,11 @@ const TagStep_Table: React.FC<Props> = ({
 
     // column 변경 시 value check
     let columnNumber = Number(e);
+    let sampleNumber = Number(e);
     if (type === "column") {
       columnNumber = columnNumber < 1 ? 1 : Math.floor(columnNumber);
+    } else if (type === "sample") {
+      sampleNumber = sampleNumber < 1 ? 1 : Math.floor(sampleNumber);
     }
 
     setSectionList((preV: SectionListType) => {
@@ -68,6 +71,7 @@ const TagStep_Table: React.FC<Props> = ({
 
       const newSection = {
         ...newList[itemKey],
+        ...(type === "sample" && { samples: sampleNumber }),
         ...(type === "column" && { columns: columnNumber }),
         ...(type === "column" && columnContents && { columnContents }),
         ...(type === "row_click" && { isRowClick: e }),
@@ -83,7 +87,18 @@ const TagStep_Table: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex items-center px-8 border-r-1">
+      <div className="flex items-center px-4 border-r-1 border-l-1">
+        <Input
+          className="mr-1 w-[50px]"
+          key={itemKey}
+          type="number"
+          size="sm"
+          value={String(sectionData.samples)}
+          onValueChange={(e) => onValueChange(e, "sample")}
+        />
+        <span className="ml-1">Samples</span>
+      </div>
+      <div className="flex items-center px-4 border-r-1">
         <Input
           className="mr-1 w-[50px]"
           key={itemKey}

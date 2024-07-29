@@ -1,6 +1,6 @@
-import { BasicDirectionTypes, EzTagTypes, IBasicLayout } from "@/types";
+import { BasicDirectionTypes, EzTagTypes } from "@/types";
 import { Button, Tab, Tabs, RadioGroup, Radio } from "@nextui-org/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import TagStep from "./TagStep";
 import { useAtom, useSetAtom } from "jotai";
 import {
@@ -15,6 +15,8 @@ import {
   faGripHorizontal,
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
+import SampleTemplate from "./SampleTemplate";
+import { genFormPrompt, genListPrompt, genTablePrompt } from "@/lib/prompt";
 
 type ChangeType = "title" | "description";
 
@@ -82,82 +84,13 @@ const EzSelect: React.FC = () => {
       .map((section, index) => {
         if (section.kind === EzTagTypes.LIST) {
           // List section
-          const name = `- section${index + 1}\n\t`;
-          const title = section.title ? `* title : ${section.title}\n\t` : "";
-          const type = `* type : ${section.layout} ${EzTagTypes.LIST}\n\t`;
-          const icon = section.isIcon
-            ? "* The icon is included in the list tag\n\t"
-            : "";
-          const image = section.isImage
-            ? "* The image is included in the list tag\n\t"
-            : "";
-          const dragDrop = section.isDragDrop
-            ? "* The order of the list can be modified by dragging and dropping.\n\t"
-            : "";
-
-          return name + title + type + icon + image + dragDrop;
+          return genListPrompt(section, index);
         } else if (section.kind === EzTagTypes.TABLE) {
           // Table section
-          const name = `- section${index + 1}\n\t`;
-          const title = section.title ? `* title : ${section.title}\n\t` : "";
-          const type = `* type : ${EzTagTypes.TABLE} with ${section.columns} columns\n\t\t`;
-
-          const columns = section.columnContents
-            .map((content, index, array) => {
-              const isLast = array.length - 1 === index;
-
-              const cTitle = `${index + 1}. Column${index + 1} has the title '${
-                content.title
-              }'. `;
-              const cTag = `Column${index + 1} consists of ${
-                content.tagType
-              } tag. `;
-              const cClick = content.clickEvent
-                ? `Column${index + 1} contains a click event.`
-                : "";
-              const suffix = isLast ? "\n\t" : "\n\t\t";
-              return cTitle + cTag + cClick + suffix;
-            })
-            .join("");
-
-          const rowClick = section.isRowClick
-            ? "* Put a row-click event on the table tag.\n\t"
-            : "";
-          const pagination = section.isRowClick
-            ? "* Put a pagination function on the table tag.\n\t"
-            : "";
-          const dragDrop = section.isDragDrop
-            ? "* The row order of the column can be modified by dragging and dropping.\n\t"
-            : "";
-
-          return (
-            name + title + type + columns + rowClick + pagination + dragDrop
-          );
+          return genTablePrompt(section, index);
         } else if (section.kind === EzTagTypes.FORM) {
           // Form section
-          const name = `- section${index + 1}\n\t`;
-          const title = section.title ? `* title : ${section.title}\n\t` : "";
-          const type = `* type : ${EzTagTypes.FORM} with ${section.items} items\n\t\t`;
-
-          const items = section.itemsContents
-            .map((content, index, array) => {
-              const isLast = array.length - 1 === index;
-
-              const label = `${index + 1}. Item${index + 1} has the label '${
-                content.label
-              }'. `;
-              const iTag = `Item${index + 1} consists of ${
-                content.tagType
-              } tag. `;
-              const iRequired = content.required
-                ? `Item${index + 1} is required.`
-                : `Item${index + 1} isn't required.`;
-              const suffix = isLast ? "\n\t" : "\n\t\t";
-              return label + iTag + iRequired + suffix;
-            })
-            .join("");
-
-          return name + title + type + items;
+          return genFormPrompt(section, index);
         }
       })
       .join("\n");
@@ -167,7 +100,9 @@ const EzSelect: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col max-w-[1200px] justify-center w-full">
+      <div className="flex flex-col justify-center w-full">
+        <SampleTemplate />
+
         <div className="flex flex-col gap-3 mt-5 border-b-1 py-5 border-neutral-300 border-dashed">
           <div className="mb-2 sectionTitle">
             <span>Enter the Page title and information.</span>
@@ -178,7 +113,7 @@ const EzSelect: React.FC = () => {
               <dd className="w-full">
                 <input
                   type="text"
-                  className="w-full border-1 border-neutral-300 rounded h-[36px]"
+                  className="w-full border-1 border-neutral-300 rounded h-[36px] px-2"
                   // value={}
                   onChange={(e) => onInfoChange(e.target.value, "title")}
                 />
@@ -188,7 +123,7 @@ const EzSelect: React.FC = () => {
               <dt className="w-[275px] font-medium">Page Description</dt>
               <dd className="w-full">
                 <textarea
-                  className="w-full border-1 border-neutral-300 rounded h-[74px]"
+                  className="w-full border-1 border-neutral-300 rounded h-[74px] px-2"
                   onChange={(e) => onInfoChange(e.target.value, "description")}
                 />
               </dd>
@@ -214,9 +149,7 @@ const EzSelect: React.FC = () => {
               <Radio value="2" className="mr-1">
                 2 Section
               </Radio>
-              <Radio value="3">
-                3 Section
-              </Radio>
+              <Radio value="3">3 Section</Radio>
             </RadioGroup>
             {Number(basicLayout.step) > 1 && (
               <Tabs

@@ -30,6 +30,7 @@ export const initColumnContent = {
 export const initTableValue: ITableOptions = {
   kind: EzTagTypes.TABLE,
   title: "",
+  samples: 1,
   columns: 1,
   columnContents: [initColumnContent],
   isRowClick: false,
