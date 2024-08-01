@@ -1,20 +1,27 @@
-import { EzTagTypes, IFormOptions, IListOptions, ITableOptions } from "@/types";
+import {
+  EzListLayoutTypes,
+  EzTagTypes,
+  IFormOptions,
+  IListOptions,
+  ITableOptions,
+} from "@/types";
 
 export const genListPrompt = (section: IListOptions, index: number) => {
   const name = `- section${index + 1}\n\t`;
   const title = section.title ? `* title : ${section.title}\n\t` : "";
-  const type = `* type : ${section.layout} ${EzTagTypes.LIST}\n\t`;
-  const icon = section.isIcon
-    ? "* The icon is included in the list tag\n\t"
-    : "";
-  const image = section.isImage
-    ? "* The image is included in the list tag\n\t"
-    : "";
+
+  const type = `* type : ${section.layout} ${
+    section.layout === EzListLayoutTypes.ARRANGEMENT ? "grid" : "slide"
+  } contents\n\t`;
+
+  const samples = `* Need ${section.samples} sample data.\n\t`;
+  const icon = section.isIcon ? "* Each element includes the icon\n\t" : "";
+  const image = section.isImage ? "* Each element includes the image\n\t" : "";
   const dragDrop = section.isDragDrop
-    ? "* The order of the list can be modified by dragging and dropping.\n\t"
+    ? "* The order of elements can be modified by dragging and dropping\n\t"
     : "";
 
-  return name + title + type + icon + image + dragDrop;
+  return name + title + type + samples + icon + image + dragDrop;
 };
 
 export const genTablePrompt = (section: ITableOptions, index: number) => {

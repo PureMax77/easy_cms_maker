@@ -48,10 +48,10 @@ const TagStep_Table: React.FC<Props> = ({
   };
 
   const onValueChange = (e: any, type: ChangeType) => {
-    // column fail check
-    if (type === "column" && (!e || e === "0")) return;
+    // fail check
+    if ((type === "column" || type === "sample") && (!e || e === "0")) return;
 
-    // column 변경 시 value check
+    // column, sample 변경 시 value check
     let columnNumber = Number(e);
     let sampleNumber = Number(e);
     if (type === "column") {

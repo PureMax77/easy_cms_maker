@@ -16,6 +16,7 @@ export const initListValue: IListOptions = {
   kind: EzTagTypes.LIST,
   title: "",
   layout: EzListLayoutTypes.HORIZONTAL,
+  samples: 6,
   isIcon: false,
   isImage: false,
   isDragDrop: false,
@@ -30,7 +31,7 @@ export const initColumnContent = {
 export const initTableValue: ITableOptions = {
   kind: EzTagTypes.TABLE,
   title: "",
-  samples: 1,
+  samples: 6,
   columns: 1,
   columnContents: [initColumnContent],
   isRowClick: false,
@@ -66,3 +67,6 @@ export const basicInfoAtom = atom<IPageBasicInfo>({
 });
 
 export const promptAtom = atom<string>("");
+
+// 템플릿을 더 알맞게하기 위한 추가 프롬프트내용
+export const templateAddPromptAtom = atom<string>("");

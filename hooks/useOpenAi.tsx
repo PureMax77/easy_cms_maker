@@ -1,10 +1,16 @@
+import { templateAddPromptAtom } from "@/store";
+import { useSetAtom } from "jotai";
 import { useState } from "react";
 
 export default function useOpenAi() {
   const [aiCode, setAiCode] = useState("");
   const [loadingMsg, setLoadingMsg] = useState("");
+  const setAdditionalPrompt = useSetAtom(templateAddPromptAtom);
 
-  const onReset = () => setAiCode("");
+  const onReset = () => {
+    setAiCode("");
+    setAdditionalPrompt("");
+  };
 
   const getAiCode = async (content: string) => {
     setLoadingMsg("코드 작성 중...");

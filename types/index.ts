@@ -36,6 +36,7 @@ export interface IListOptions {
   kind: EzTagTypes.LIST;
   title: string;
   layout: EzListLayoutTypes;
+  samples: number;
   isIcon: boolean;
   isImage: boolean;
   isDragDrop: boolean;

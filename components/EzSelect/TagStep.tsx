@@ -1,6 +1,6 @@
 import { EzTagTypes, IFormOptions, IListOptions, ITableOptions } from "@/types";
 import { Input, Tab, Tabs } from "@nextui-org/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import {
   initFormValue,
@@ -58,6 +58,12 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
       return newList;
     });
   };
+
+  useEffect(() => {
+    if (sectionList[itemKey].kind !== tagType) {
+      setTagType(sectionList[itemKey].kind);
+    }
+  }, [sectionList]);
 
   return (
     <>

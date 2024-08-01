@@ -2,13 +2,14 @@ import { BasicDirectionTypes, EzTagTypes } from "@/types";
 import { Button, Tab, Tabs, RadioGroup, Radio } from "@nextui-org/react";
 import { useMemo } from "react";
 import TagStep from "./TagStep";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   basicInfoAtom,
   basicLayoutAtom,
   initListValue,
   promptAtom,
   sectionListAtom,
+  templateAddPromptAtom,
 } from "@/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,6 +26,7 @@ const EzSelect: React.FC = () => {
   const [basicLayout, setBasicLayout] = useAtom(basicLayoutAtom);
   const [basicInfo, setBasicInfo] = useAtom(basicInfoAtom);
   const setPromptContent = useSetAtom(promptAtom);
+  const additionalPrompt = useAtomValue(templateAddPromptAtom);
 
   const directionTypes: BasicDirectionTypes[] = useMemo(
     () => Object.values(BasicDirectionTypes),
@@ -95,7 +97,9 @@ const EzSelect: React.FC = () => {
       })
       .join("\n");
 
-    setPromptContent(titleInfo + descInfo + layoutInfo + sectionInfo);
+    setPromptContent(
+      titleInfo + descInfo + layoutInfo + sectionInfo + additionalPrompt
+    );
   };
 
   return (
@@ -114,7 +118,7 @@ const EzSelect: React.FC = () => {
                 <input
                   type="text"
                   className="w-full border-1 border-neutral-300 rounded h-[36px] px-2"
-                  // value={}
+                  value={basicInfo.title}
                   onChange={(e) => onInfoChange(e.target.value, "title")}
                 />
               </dd>
@@ -124,6 +128,7 @@ const EzSelect: React.FC = () => {
               <dd className="w-full">
                 <textarea
                   className="w-full border-1 border-neutral-300 rounded h-[74px] px-2"
+                  value={basicInfo.description}
                   onChange={(e) => onInfoChange(e.target.value, "description")}
                 />
               </dd>

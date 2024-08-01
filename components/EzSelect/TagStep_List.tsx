@@ -1,6 +1,6 @@
 import { SectionListType } from "@/store";
 import { EzListLayoutTypes, IListOptions } from "@/types";
-import { Checkbox, Tab, Tabs } from "@nextui-org/react";
+import { Checkbox, Input, Tab, Tabs } from "@nextui-org/react";
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,7 +15,7 @@ interface Props {
   setSectionList: Function;
 }
 
-type ChangeType = "layout" | "icon" | "image" | "drag";
+type ChangeType = "layout" | "sample" | "icon" | "image" | "drag";
 
 const TagStep_List: React.FC<Props> = ({
   itemKey,
@@ -28,11 +28,21 @@ const TagStep_List: React.FC<Props> = ({
   );
 
   const onValueChange = (e: any, type: ChangeType) => {
+    // fail check
+    if (type === "sample" && (!e || e === "0")) return;
+
+    // column, sample 변경 시 value check
+    let sampleNumber = Number(e);
+    if (type === "sample") {
+      sampleNumber = sampleNumber < 1 ? 1 : Math.floor(sampleNumber);
+    }
+
     setSectionList((preV: SectionListType) => {
       const newList = JSON.parse(JSON.stringify(preV));
       const newSection = {
         ...newList[itemKey],
         ...(type === "layout" && { layout: e }),
+        ...(type === "sample" && { samples: sampleNumber }),
         ...(type === "icon" && { isIcon: e }),
         ...(type === "image" && { isImage: e }),
         ...(type === "drag" && { isDragDrop: e }),
@@ -44,7 +54,7 @@ const TagStep_List: React.FC<Props> = ({
 
   return (
     <>
-      <div className="flex px-8 border-r-1">
+      <div className="flex px-4 border-r-1 border-l-1">
         <Tabs
           color="success"
           radius="sm"
@@ -74,7 +84,18 @@ const TagStep_List: React.FC<Props> = ({
           ))}
         </Tabs>
       </div>
-      <div className="flex items-center px-8 gap-5">
+      <div className="flex items-center px-4 border-r-1">
+        <Input
+          className="mr-1 w-[50px]"
+          key={itemKey}
+          type="number"
+          size="sm"
+          value={String(sectionData.samples)}
+          onValueChange={(e) => onValueChange(e, "sample")}
+        />
+        <span className="ml-1">Samples</span>
+      </div>
+      <div className="flex items-center px-4 gap-5">
         <Checkbox
           isSelected={sectionData.isIcon}
           onValueChange={(e) => onValueChange(e, "icon")}
