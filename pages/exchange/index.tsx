@@ -4,6 +4,7 @@ import { Image } from "@nextui-org/react";
 import Container from "@/components/Conatiner";
 import { numUnit } from "@/utils/number";
 import { lessThenText } from "@/utils/numberUtils";
+import Link from "next/link";
 
 export default function Exchange() {
   const getExchangeList = useCoinMarketCap();
@@ -43,7 +44,7 @@ export default function Exchange() {
       }
 
       if (exchanges.length == newList.length) {
-        // console.log(newList);
+        console.log(newList);
         setExchangeList(
           newList.sort(function (a, b) {
             return b.spot_volume_usd - a.spot_volume_usd;
@@ -63,10 +64,17 @@ export default function Exchange() {
         <tr key={index}>
           <td className="w-[60px] text-center">{index + 1}</td>
           <td>
-            <div className="flex items-center gap-2 w-[200px]">
-              <Image src={item.logo} alt={item.name} width={24} height={24} />
-              <span>{item.name}</span>
-            </div>
+            <Link href={item.urls.website[0]} target="_blank">
+              <div className="flex items-center gap-2 w-[200px]">
+                <Image src={item.logo} alt={item.name} width={24} height={24} />
+                <span>{item.name}</span>
+                <Image
+                  src={"/images/ic_link.png"}
+                  alt={item.name}
+                  width={12}
+                />
+              </div>
+            </Link>
           </td>
           <td className="text-right w-[180px]">
             {lessThenText(item.spot_volume_usd || "0", "$ ", false, 2)}
