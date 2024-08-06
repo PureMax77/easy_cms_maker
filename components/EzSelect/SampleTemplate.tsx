@@ -132,12 +132,39 @@ export default function SampleTemplate() {
     <>
       <div className="flex flex-col gap-3 mt-5 border-b-1 py-5 border-neutral-300 border-dashed">
         <div className="mb-2 sectionTitle">
-          <span>Sample Template lists.</span>
+          <span>Sample Template list.</span>
         </div>
-        <div className="flex gap-5">
-          <Button onPress={() => handleOpen(1)}>Template1</Button>
-          <Button onPress={() => handleOpen(2)}>Template2</Button>
-          <Button onPress={() => handleOpen(3)}>Template3</Button>
+        <div className="flex gap-5 sample">
+          <Button onPress={() => handleOpen(1)}>
+            <Image
+              src={"/images/ic_imgs.png"}
+              className="rounded-none"
+              alt="EZCodeMaker"
+              width={24}
+              height={24}
+            />
+            Template1
+          </Button>
+          <Button onPress={() => handleOpen(2)}>
+            <Image
+              src={"/images/ic_form.png"}
+              className="rounded-none"
+              alt="EZCodeMaker"
+              width={24}
+              height={24}
+            />
+            Template2
+          </Button>
+          <Button onPress={() => handleOpen(3)}>
+            <Image
+              src={"/images/ic_layout.png"}
+              className="rounded-none"
+              alt="EZCodeMaker"
+              width={24}
+              height={24}
+            />
+            Template3
+          </Button>
         </div>
       </div>
       <Modal size={"3xl"} isOpen={isOpen} onClose={onClose}>

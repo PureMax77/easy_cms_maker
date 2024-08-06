@@ -30,3 +30,12 @@ section[role="dialog"] button[aria-label="Close"] {
 .token-list tbody tr { font-size: 0.875rem; line-height: 1.25rem; }
 .token-list tbody tr:hover { background-color: #f1f5f9; }
 .token-list tbody td { padding: 0.5rem; border: 1px solid #d4d4d4; }
+
+.sample button { 
+  display: flex;
+  flex-direction: column;
+  width: 120px; 
+  height: 120px; 
+  background-color: #F4F6FF; 
+  border: 1px solid rgba(0,0,0,.1); 
+}
