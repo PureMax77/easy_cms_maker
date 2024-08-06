@@ -97,9 +97,11 @@ export default function AiTest() {
               </tr>
             </thead>
             <tbody>
-              {list.map((item, i) => (
-                <TokenList key={i} token={item} index={i} />
-              ))}
+              {list.length > 0 && (
+                list.map((item, i) => (
+                  <TokenList key={i} token={item} index={i} />
+                ))
+              )}
             </tbody>
           </table>
         </div>
