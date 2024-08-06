@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useCoinMarketCap from "@/hooks/useCoinMarketCap";
 import { Image } from "@nextui-org/react";
 import Container from "@/components/Conatiner";
@@ -7,7 +7,7 @@ import { lessThenText } from "@/utils/numberUtils";
 
 export default function Exchange() {
   const getExchangeList = useCoinMarketCap();
-  // const [list, setList] = useState<any[]>([]);
+  const [list, setList] = useState<any[]>([]);
   const [exchangeList, setExchangeList] = useState<any[]>([]);
 
   const getList = () => {
@@ -16,17 +16,16 @@ export default function Exchange() {
       sort: "volume_24h",
       limit: "10",
     }).then((list) => {
-      // console.log(list);
-      if (list.summary && list.summary.data.length > 0) {
-        // setList(list.summary.data);
+      // console.log(list.summary);
+      if (list.summary && list.summary.data) {
         getExchangeInfo(list.summary.data);
       }
     });
   };
 
-  const getExchangeInfo = async (list: any[]) => {
+  const getExchangeInfo = async (exchanges: any[]) => {
     let newList: any[] = [];
-    list.forEach(async (item: any, index: number) => {
+    exchanges.forEach(async (item: any, index: number) => {
       const result = await getExchangeList({
         target: "exchangeInfo",
         id: item.id,
@@ -39,35 +38,43 @@ export default function Exchange() {
           ...result.summary.data[item.id],
         };
 
-        console.log(_data);
+        // console.log(_data);
         newList.push(_data);
       }
-    });
 
-    // console.log(newList);
-    setExchangeList(newList);
+      if (exchanges.length == newList.length) {
+        // console.log(newList);
+        setExchangeList(
+          newList.sort(function (a, b) {
+            return b.spot_volume_usd - a.spot_volume_usd;
+          })
+        );
+      }
+    });
   }
 
   useEffect(() => {
-    if (exchangeList.length == 0) getList();
-  }, [exchangeList]);
+    getList();
+  }, []);
 
   const ExchangeList = ({ item, index }: { item: any; index: number }) => {
     return (
       <>
         <tr key={index}>
-          <td className="text-center">{index + 1}</td>
+          <td className="w-[60px] text-center">{index + 1}</td>
           <td>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-[200px]">
               <Image src={item.logo} alt={item.name} width={24} height={24} />
               <span>{item.name}</span>
             </div>
           </td>
-          <td className="text-right">{numUnit(item.circulating_supply)}</td>
-          <td className="text-right">
-            {lessThenText(item.weekly_visits || "0", "", false)}
+          <td className="text-right w-[180px]">
+            {lessThenText(item.spot_volume_usd || "0", "$ ", false, 2)}
           </td>
-          <td className="text-right">{item.fiats}</td>
+          <td className="text-right w-[180px]">
+            {lessThenText(item.weekly_visits || "0", "", false, 0)}
+          </td>
+          <td>{item.fiats.join(", ")}</td>
         </tr>
       </>
     );
@@ -84,17 +91,18 @@ export default function Exchange() {
           <table className="w-full border-collapse token-list">
             <thead>
               <tr>
-                <th className="w-[50px]">#</th>
-                <th className="text-left">Name</th>
-                <th className="text-right">거래량</th>
-                <th className="text-right">주별 방문</th>
-                <th className="text-right">지원 화폐</th>
+                <th className="w-[60px]">#</th>
+                <th className="text-left w-[200px]">Name</th>
+                <th className="text-right w-[180px]">거래량</th>
+                <th className="text-right w-[180px]">주별 방문</th>
+                <th>지원 화폐</th>
               </tr>
             </thead>
             <tbody>
-              {exchangeList.map((item, i) => (
-                <ExchangeList key={i} item={item} index={i} />
-              ))}
+              {exchangeList.length > 0 &&
+                exchangeList.map((item, i) => (
+                  <ExchangeList key={i} item={item} index={i} />
+                ))}
             </tbody>
           </table>
         </div>

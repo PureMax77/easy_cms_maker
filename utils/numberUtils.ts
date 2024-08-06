@@ -131,7 +131,7 @@ export const lessThenText = (
   const isLess = isLessThan_BigNumber(n.abs().toString(), targetValue);
 
   if (checkZero(n.toFixed())) {
-    return isWon ? "₩ 0" : "0" + suffix;
+    return isWon ? "₩ 0" : suffix + "0";
   } else {
     if (isLess) {
       if (!isWon && isNegative) targetValue = "-" + targetValue;
@@ -148,7 +148,7 @@ export const lessThenText = (
         ? isNegative
           ? "-₩ " + returnNumber
           : "₩ " + returnNumber
-        : returnNumber + suffix;
+        : suffix + returnNumber;
     }
   }
 };
