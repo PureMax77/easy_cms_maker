@@ -328,7 +328,7 @@ export default function SampleTemplate() {
           </Button>
           <Button onPress={() => handleOpen(3)}>
             <Image
-              src={"/images/ic_layout.png"}
+              src={"/images/ic_notice.png"}
               className="rounded-none"
               alt="EZCodeMaker"
               width={24}
