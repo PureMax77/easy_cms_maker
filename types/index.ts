@@ -18,6 +18,7 @@ export enum EzTagTypes {
   LIST = "List",
   TABLE = "Table",
   FORM = "Form",
+  CHART = "Chart",
 }
 
 export enum EzListLayoutTypes {

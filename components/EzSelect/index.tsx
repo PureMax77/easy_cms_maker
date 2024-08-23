@@ -193,9 +193,11 @@ const EzSelect: React.FC = () => {
           <div className="mb-0 sectionTitle">
             <span>Select a tag to enter a section.</span>
           </div>
-          {sectionList.map((_, index) => (
-            <TagStep key={index} itemKey={index} />
-          ))}
+          <div className="flex flex-col gap-10">
+            {sectionList.map((_, index) => (
+              <TagStep key={index} itemKey={index} />
+            ))}
+          </div>
         </div>
         <div className="text-right border-b-1 py-5 px-3 border-neutral-300 border-dashed">
           <Button

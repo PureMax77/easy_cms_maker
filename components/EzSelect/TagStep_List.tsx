@@ -53,8 +53,8 @@ const TagStep_List: React.FC<Props> = ({
   };
 
   return (
-    <>
-      <div className="flex px-4 border-r-1 border-l-1">
+    <div className="flex">
+      <div className="flex pr-4 border-r-1">
         <Tabs
           color="success"
           radius="sm"
@@ -115,7 +115,7 @@ const TagStep_List: React.FC<Props> = ({
           Drag & Drop
         </Checkbox>
       </div>
-    </>
+    </div>
   );
 };
 

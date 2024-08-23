@@ -86,8 +86,8 @@ const TagStep_Table: React.FC<Props> = ({
   };
 
   return (
-    <>
-      <div className="flex items-center px-4 border-r-1 border-l-1">
+    <div className="flex">
+      <div className="flex items-center pr-4 border-r-1">
         <Input
           className="mr-1 w-[50px]"
           key={itemKey}
@@ -135,7 +135,7 @@ const TagStep_Table: React.FC<Props> = ({
           Drag & Drop
         </Checkbox>
       </div>
-    </>
+    </div>
   );
 };
 

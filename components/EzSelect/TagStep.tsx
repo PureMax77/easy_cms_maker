@@ -17,6 +17,7 @@ import {
   faBars,
   faTableList,
   faListCheck,
+  faChartPie,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
@@ -80,7 +81,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
             onChange={onTitleChange}
           />
         </div>
-        <div className="flex mt-3">
+        <div className="flex flex-col gap-3 mt-3">
           <Tabs
             color="success"
             radius="sm"
@@ -99,7 +100,9 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
                           ? faBars
                           : type == "Table"
                           ? faTableList
-                          : faListCheck
+                          : type == "Form"
+                          ? faListCheck
+                          : faChartPie
                       }
                       className="mr-2"
                     ></FontAwesomeIcon>

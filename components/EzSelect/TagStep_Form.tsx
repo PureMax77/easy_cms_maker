@@ -66,8 +66,8 @@ const TagStep_Form: React.FC<Props> = ({
   };
 
   return (
-    <>
-      <div className="flex items-center px-8">
+    <div className="flex">
+      <div className="flex items-center pr-8">
         <Input
           className="mr-1 w-[50px]"
           type="number"
@@ -83,7 +83,7 @@ const TagStep_Form: React.FC<Props> = ({
           itemKey={itemKey}
         />
       </div>
-    </>
+    </div>
   );
 };
 
