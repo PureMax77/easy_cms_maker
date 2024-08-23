@@ -22,10 +22,8 @@ const Header: React.FC = () => {
     "flex gap-3 !text-16 text-inherit font-medium py-0 min-w-fit cursor-pointer";
 
   const isActive = (path: string) => {
-    if (lastSegment == path) 
-      return true;
-    else 
-      return false;
+    if (lastSegment == path) return true;
+    else return false;
   };
 
   return (
@@ -41,12 +39,12 @@ const Header: React.FC = () => {
           <span
             className={logoClass}
             style={{ cursor: "pointer" }}
-            onClick={() => router.push("/ezm")}
+            onClick={() => router.push("/")}
           >
             EZCodeMaker
           </span>
         </NavbarBrand>
-        <div className="ml-14 flex flex-row w-full h-[40px] bg-white items-center">
+        {/* <div className="ml-14 flex flex-row w-full h-[40px] bg-white items-center">
           <NavbarContent className="md:flex items-center" justify="start">
             <NavbarItem
               className={
@@ -116,7 +114,7 @@ const Header: React.FC = () => {
               </Link>
             </NavbarItem>
           </NavbarContent>
-        </div>
+        </div> */}
       </Navbar>
     </>
   );
