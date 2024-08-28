@@ -53,7 +53,7 @@ const TagStep_Form: React.FC<Props> = ({
         itemNumber
       );
 
-      const newSection = {
+      const newSection: IFormOptions = {
         ...newList[itemKey],
         items: itemNumber,
         itemsContents,

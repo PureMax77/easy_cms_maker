@@ -1,8 +1,15 @@
-import { EzTagTypes, IFormOptions, IListOptions, ITableOptions } from "@/types";
+import {
+  EzTagTypes,
+  IChartOptions,
+  IFormOptions,
+  IListOptions,
+  ITableOptions,
+} from "@/types";
 import { Input, Tab, Tabs } from "@nextui-org/react";
 import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import {
+  initChartValue,
   initFormValue,
   initListValue,
   initTableValue,
@@ -19,6 +26,7 @@ import {
   faListCheck,
   faChartPie,
 } from "@fortawesome/free-solid-svg-icons";
+import TagStep_Chart from "./TagStep_Chart";
 
 interface Props {
   itemKey: number;
@@ -31,7 +39,7 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
   const [tagType, setTagType] = useState<EzTagTypes>(EzTagTypes.LIST);
 
   const initListBox = useMemo(
-    () => [initListValue, initTableValue, initFormValue],
+    () => [initListValue, initTableValue, initFormValue, initChartValue],
     []
   );
 
@@ -76,7 +84,9 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
           <input
             type="text"
             className="w-full border-1 border-neutral-300 rounded h-[36px] px-2"
-            placeholder="Section Title"
+            placeholder={
+              tagType === EzTagTypes.CHART ? "Chart Title" : "Section Title"
+            }
             value={sectionList[itemKey].title}
             onChange={onTitleChange}
           />
@@ -129,6 +139,13 @@ const TagStep: React.FC<Props> = ({ itemKey }) => {
           {tagType === EzTagTypes.FORM && (
             <TagStep_Form
               sectionData={sectionList[itemKey] as IFormOptions}
+              setSectionList={setSectionList}
+              itemKey={itemKey}
+            />
+          )}
+          {tagType === EzTagTypes.CHART && (
+            <TagStep_Chart
+              sectionData={sectionList[itemKey] as IChartOptions}
               setSectionList={setSectionList}
               itemKey={itemKey}
             />

@@ -65,6 +65,12 @@ export enum FormItemType {
   BUTTON = "Button",
 }
 
+export enum ChartType {
+  LINE = "Line",
+  BAR = "Bar",
+  Doughnut = "Doughnut",
+}
+
 export interface IColumnContent {
   title: string;
   tagType: TableColumnType;
@@ -75,6 +81,12 @@ export interface IFormContent {
   label: string;
   tagType: FormItemType;
   required: boolean;
+}
+
+export interface IDatasetContent {
+  label: string;
+  backgroundColor: string;
+  borderColor: string;
 }
 
 export interface ITableOptions {
@@ -93,6 +105,16 @@ export interface IFormOptions {
   title: string;
   items: number;
   itemsContents: IFormContent[];
+}
+
+export interface IChartOptions {
+  kind: EzTagTypes.CHART;
+  title: string;
+  chartType: ChartType;
+  datasets: number;
+  xTitle: string;
+  yTitle: string;
+  datasetContents: IDatasetContent[];
 }
 
 export interface IPageBasicInfo {

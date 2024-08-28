@@ -26,6 +26,8 @@ const CustomSandPack: React.FC<ISandProps> = ({ aiCode, setAiCode }) => {
           "react-dnd-html5-backend": "latest",
           "react-beautiful-dnd": "latest",
           "immutability-helper": "latest",
+          "chart.js": "latest",
+          "react-chartjs-2": "latest",
         },
       }}
       files={{
