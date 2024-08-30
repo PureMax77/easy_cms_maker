@@ -76,101 +76,107 @@ const EzChartModal: React.FC<Props> = ({
     });
   };
 
-  return (
-    <>
-      <Button onPress={onOpen} isIconOnly size="sm" className="bg-gray-200">
-        <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="3xl">
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 border-y-1">
-                Dataset List
-              </ModalHeader>
-              <ModalBody className="px-6 mt-3">
-                <ul className="modal-form">
-                  {datasetContents.map((content, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center text-nowrap gap-3 mb-3"
-                    >
-                      <span className="title">dataset {index + 1}</span>
-                      <Input
-                        placeholder="Label"
-                        className="w-full border-1 border-neutral-300 rounded-md h-[48px] input"
-                        value={content.label}
-                        onChange={(e) =>
-                          onValueChange(e.target.value, "label", index)
-                        }
-                      />
-                      {nowSection.chartType !== ChartType.DOUGHNUT && (
-                        <>
-                          <Button
-                            onPress={() => {
-                              setNowCIndex(index);
-                              setNowColorType("backgroundColor");
-                              onOpenC();
-                            }}
-                            size="sm"
-                            className="bg-gray-200 min-w-48 h-[48px] text-medium"
-                          >
-                            Background:{" "}
-                            <span
-                              style={{
-                                color: datasetContents[index].backgroundColor,
+  if (!datasetContents) {
+    return <></>;
+  } else {
+    return (
+      <>
+        <Button onPress={onOpen} isIconOnly size="sm" className="bg-gray-200">
+          <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
+        </Button>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="3xl">
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 border-y-1">
+                  Dataset List
+                </ModalHeader>
+                <ModalBody className="px-6 mt-3">
+                  <ul className="modal-form">
+                    {datasetContents.map((content, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center text-nowrap gap-3 mb-3"
+                      >
+                        <span className="title">dataset {index + 1}</span>
+                        <Input
+                          placeholder="Label"
+                          className="w-full border-1 border-neutral-300 rounded-md h-[48px] input"
+                          value={content.label}
+                          onChange={(e) =>
+                            onValueChange(e.target.value, "label", index)
+                          }
+                        />
+                        {nowSection.chartType !== ChartType.DOUGHNUT && (
+                          <>
+                            <Button
+                              onPress={() => {
+                                setNowCIndex(index);
+                                setNowColorType("backgroundColor");
+                                onOpenC();
                               }}
+                              size="sm"
+                              className="bg-gray-200 min-w-48 h-[48px] text-medium"
                             >
-                              {datasetContents[index].backgroundColor}
-                            </span>
-                          </Button>
-                          <Button
-                            onPress={() => {
-                              setNowCIndex(index);
-                              setNowColorType("borderColor");
-                              onOpenC();
-                            }}
-                            size="sm"
-                            className="bg-gray-200 min-w-40 h-[48px] text-medium"
-                          >
-                            Border:{" "}
-                            <span
-                              style={{
-                                color: datasetContents[index].borderColor,
+                              Background:{" "}
+                              <span
+                                style={{
+                                  color: datasetContents[index].backgroundColor,
+                                }}
+                              >
+                                {datasetContents[index].backgroundColor}
+                              </span>
+                            </Button>
+                            <Button
+                              onPress={() => {
+                                setNowCIndex(index);
+                                setNowColorType("borderColor");
+                                onOpenC();
                               }}
+                              size="sm"
+                              className="bg-gray-200 min-w-40 h-[48px] text-medium"
                             >
-                              {datasetContents[index].borderColor}
-                            </span>
-                          </Button>
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  className="w-[120px] text-white mb-2 border-2 border-sky-800 rounded-md text-lg"
-                  style={{ background: "#2F88FF" }}
-                  onPress={onClose}
-                >
-                  OK
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+                              Border:{" "}
+                              <span
+                                style={{
+                                  color: datasetContents[index].borderColor,
+                                }}
+                              >
+                                {datasetContents[index].borderColor}
+                              </span>
+                            </Button>
+                          </>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    className="w-[120px] text-white mb-2 border-2 border-sky-800 rounded-md text-lg"
+                    style={{ background: "#2F88FF" }}
+                    onPress={onClose}
+                  >
+                    OK
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
 
-      <ColorModal
-        isOpen={isOpenC}
-        onOpen={onOpenC}
-        onOpenChange={onOpenChangeC}
-        color={datasetContents[nowCIndex][nowColorType]}
-        onColorChange={(color) => onValueChange(color.hex, "color", nowCIndex)}
-      />
-    </>
-  );
+        <ColorModal
+          isOpen={isOpenC}
+          onOpen={onOpenC}
+          onOpenChange={onOpenChangeC}
+          color={datasetContents[nowCIndex][nowColorType]}
+          onColorChange={(color) =>
+            onValueChange(color.hex, "color", nowCIndex)
+          }
+        />
+      </>
+    );
+  }
 };
 
 export default EzChartModal;
