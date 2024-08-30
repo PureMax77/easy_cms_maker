@@ -85,7 +85,7 @@ const TagStep_Chart: React.FC<Props> = ({
         <Select
           label="Chart Type"
           className="w-40"
-          value={sectionData.chartType}
+          selectedKeys={[sectionData.chartType]}
           onChange={(e) => onValueChange(e.target.value, "type")}
         >
           {tagTypes.map((chartType) => (

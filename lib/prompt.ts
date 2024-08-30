@@ -87,7 +87,11 @@ export const genFormPrompt = (section: IFormOptions, index: number) => {
   return name + title + type + items;
 };
 
-export const genChartPrompt = (section: IChartOptions, index: number) => {
+export const genChartPrompt = (
+  section: IChartOptions,
+  index: number,
+  addPrompt: string
+) => {
   const name = `- section${index + 1}\n\t`;
   const type = `* chart type : ${section.chartType} chart with ${section.datasets} datasets\n\t`;
 
@@ -134,5 +138,9 @@ export const genChartPrompt = (section: IChartOptions, index: number) => {
   const xTitle = section.xTitle ? `* x-axis title : ${section.xTitle}\n\t` : "";
   const yTitle = section.yTitle ? `* y-axis title : ${section.yTitle}\n\t` : "";
 
-  return name + type + finalDatasets + title + xTitle + yTitle;
+  const additionalPrompt = addPrompt ? addPrompt + "\n\t" : "";
+
+  return (
+    name + type + finalDatasets + title + xTitle + yTitle + additionalPrompt
+  );
 };
