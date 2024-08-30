@@ -6,6 +6,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   basicInfoAtom,
   basicLayoutAtom,
+  chartAddPromptAtom,
   initListValue,
   promptAtom,
   sectionListAtom,
@@ -17,7 +18,12 @@ import {
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import SampleTemplate from "./SampleTemplate";
-import { genFormPrompt, genListPrompt, genTablePrompt } from "@/lib/prompt";
+import {
+  genChartPrompt,
+  genFormPrompt,
+  genListPrompt,
+  genTablePrompt,
+} from "@/lib/prompt";
 
 type ChangeType = "title" | "description";
 
@@ -27,6 +33,7 @@ const EzSelect: React.FC = () => {
   const [basicInfo, setBasicInfo] = useAtom(basicInfoAtom);
   const setPromptContent = useSetAtom(promptAtom);
   const additionalPrompt = useAtomValue(templateAddPromptAtom);
+  const addChartPrompt = useAtomValue(chartAddPromptAtom);
 
   const directionTypes: BasicDirectionTypes[] = useMemo(
     () => Object.values(BasicDirectionTypes),
@@ -75,7 +82,9 @@ const EzSelect: React.FC = () => {
 
   const onSetPrompt = () => {
     const titleInfo = `- title of the page : ${basicInfo.title}\n`;
-    const descInfo = `- description of the page : ${basicInfo.description}\n\n`;
+    const descInfo = basicInfo.description
+      ? `- description of the page : ${basicInfo.description}\n\n`
+      : "";
     const layoutInfo = `- The overall layout of the page : an application with ${
       basicLayout.step
     } ${
@@ -93,6 +102,9 @@ const EzSelect: React.FC = () => {
         } else if (section.kind === EzTagTypes.FORM) {
           // Form section
           return genFormPrompt(section, index);
+        } else if (section.kind === EzTagTypes.CHART) {
+          // Form section
+          return genChartPrompt(section, index, addChartPrompt[index]);
         }
       })
       .join("\n");
@@ -159,6 +171,7 @@ const EzSelect: React.FC = () => {
             {Number(basicLayout.step) > 1 && (
               <Tabs
                 color="success"
+                selectedKey={basicLayout.direction}
                 onSelectionChange={(v: any) =>
                   setBasicLayout((preV) => {
                     return { ...preV, direction: v };

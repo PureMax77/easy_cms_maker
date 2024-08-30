@@ -32,10 +32,9 @@ export default function useOpenAi() {
       }
 
       const result = await response.json();
-      const cleanCode = result.summary.replace(
-        /```typescript|```tsx|```jsx|```/g,
-        ""
-      );
+      const cleanCode = result.summary
+        .replace(/```typescript|```tsx|```jsx|```/g, "")
+        .replace("import 'tailwindcss/tailwind.css';", "");
 
       setAiCode(cleanCode);
     } catch (err) {

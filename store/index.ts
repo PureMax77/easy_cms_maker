@@ -95,3 +95,4 @@ export const promptAtom = atom<string>("");
 
 // 템플릿을 더 알맞게하기 위한 추가 프롬프트내용
 export const templateAddPromptAtom = atom<string>("");
+export const chartAddPromptAtom = atom<string[]>([]);

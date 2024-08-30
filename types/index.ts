@@ -68,7 +68,7 @@ export enum FormItemType {
 export enum ChartType {
   LINE = "Line",
   BAR = "Bar",
-  Doughnut = "Doughnut",
+  DOUGHNUT = "Doughnut",
 }
 
 export interface IColumnContent {

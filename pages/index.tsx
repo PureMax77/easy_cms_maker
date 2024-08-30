@@ -10,18 +10,22 @@ import {
   faChevronDown,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAtom } from "jotai";
-import { promptAtom } from "@/store";
+import { useAtom, useSetAtom } from "jotai";
+import { chartAddPromptAtom, promptAtom, templateAddPromptAtom } from "@/store";
 
 export default function Home() {
   const { getAiCode, aiCode, setAiCode, isLoading, onReset } = useOpenAi();
 
   const [promptContent, setPromptContent] = useAtom(promptAtom);
+  const setAddPrompt = useSetAtom(templateAddPromptAtom);
+  const setChartAddPrompt = useSetAtom(chartAddPromptAtom);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     getAiCode(promptContent).then(() => {
       setPromptContent("");
+      setAddPrompt("");
+      setChartAddPrompt([]);
     });
   };
 

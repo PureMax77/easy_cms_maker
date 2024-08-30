@@ -1,16 +1,19 @@
 import {
   basicInfoAtom,
   basicLayoutAtom,
+  chartAddPromptAtom,
   sectionListAtom,
   SectionListType,
   templateAddPromptAtom,
 } from "@/store";
 import {
   BasicDirectionTypes,
+  ChartType,
   EzListLayoutTypes,
   EzTagTypes,
   FormItemType,
   IBasicLayout,
+  IChartOptions,
   IFormOptions,
   IListOptions,
   IPageBasicInfo,
@@ -168,44 +171,112 @@ const templateData4: (ITableOptions | IFormOptions)[] = [
   },
 ];
 
-const templateData: ITableOptions[] = [
+const templateData5: (IChartOptions | ITableOptions)[] = [
   {
-    kind: EzTagTypes.TABLE,
-    title: "사용자 목록",
-    samples: 20,
-    columns: 5,
-    columnContents: [
+    kind: EzTagTypes.CHART,
+    title: "API 호출 건수",
+    chartType: ChartType.LINE,
+    datasets: 1,
+    xTitle: "건수",
+    yTitle: "시간",
+    datasetContents: [
       {
-        title: "Index",
-        tagType: TableColumnType.TEXT,
-        clickEvent: false,
-      },
-      {
-        title: "닉네임",
-        tagType: TableColumnType.TEXT,
-        clickEvent: false,
-      },
-      {
-        title: "Email",
-        tagType: TableColumnType.TEXT,
-        clickEvent: false,
-      },
-      {
-        title: "성별",
-        tagType: TableColumnType.TEXT,
-        clickEvent: false,
-      },
-      {
-        title: "블랙리스트",
-        tagType: TableColumnType.CHECKBOX,
-        clickEvent: true,
+        label: "",
+        backgroundColor: "#1200FF",
+        borderColor: "#1200FF",
       },
     ],
+  },
+  {
+    kind: EzTagTypes.CHART,
+    title: "API 호출 상태별 응답 건수",
+    chartType: ChartType.DOUGHNUT,
+    datasets: 1,
+    xTitle: "",
+    yTitle: "",
+    datasetContents: [],
+  },
+  {
+    kind: EzTagTypes.TABLE,
+    title: "Request List",
+    samples: 12,
+    columns: 6,
     isRowClick: false,
-    isPagination: true,
+    isPagination: false,
     isDragDrop: false,
+    columnContents: [
+      {
+        title: "Request Number",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+      {
+        title: "Source Txn Hash",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+      {
+        title: "From(Sender)",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+      {
+        title: "Destination Txn Hash",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+      {
+        title: "To(Receiver)",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+      {
+        title: "Age",
+        tagType: TableColumnType.TEXT,
+        clickEvent: false,
+      },
+    ],
   },
 ];
+
+// const templateData: ITableOptions[] = [
+//   {
+//     kind: EzTagTypes.TABLE,
+//     title: "사용자 목록",
+//     samples: 20,
+//     columns: 5,
+//     columnContents: [
+//       {
+//         title: "Index",
+//         tagType: TableColumnType.TEXT,
+//         clickEvent: false,
+//       },
+//       {
+//         title: "닉네임",
+//         tagType: TableColumnType.TEXT,
+//         clickEvent: false,
+//       },
+//       {
+//         title: "Email",
+//         tagType: TableColumnType.TEXT,
+//         clickEvent: false,
+//       },
+//       {
+//         title: "성별",
+//         tagType: TableColumnType.TEXT,
+//         clickEvent: false,
+//       },
+//       {
+//         title: "블랙리스트",
+//         tagType: TableColumnType.CHECKBOX,
+//         clickEvent: true,
+//       },
+//     ],
+//     isRowClick: false,
+//     isPagination: true,
+//     isDragDrop: false,
+//   },
+// ];
 
 // 상품리스트
 const additionalPrompt1 =
@@ -220,6 +291,13 @@ const additionalPrompt3 =
 const additionalPrompt4 =
   "* Add the text ‘Approval’ to the right of the checkbox in table\n\t* Radio consists of two options: 'Disapproval' and 'Approval' in form\n\t* Add a ‘Save Changes’ button at the bottom of the form.";
 
+const additionalPrompt5 = "";
+
+const additionalChartPrompt5 = [
+  "* create tabs with '1D', '1W', '1M', and '1Y' in the upper right corner to change the chart data.\n\t* copy the chart with a different title and place it on the right.",
+  "* position the label to the right in options.\n\t* copy the chart with a different title and place it on the right.",
+];
+
 export default function SampleTemplate() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [type, setType] = useState<number>(1);
@@ -227,6 +305,7 @@ export default function SampleTemplate() {
   const setBasicLayout = useSetAtom(basicLayoutAtom);
   const setBasicInfo = useSetAtom(basicInfoAtom);
   const setAddPrompt = useSetAtom(templateAddPromptAtom);
+  const setChartAddPrompt = useSetAtom(chartAddPromptAtom);
 
   const basicInfoList: IPageBasicInfo[] = [
     {
@@ -245,6 +324,7 @@ export default function SampleTemplate() {
       title: "API 사용 신청",
       description: "WEB2X의 API 사용 신청서 상태를 관리합니다.",
     },
+    { title: "Dashboard", description: "" },
     // {
     //   title: "사용자 관리",
     //   description: "서비스 사용자를 관리하는 페이지. 블랙리스트 추가 가능.",
@@ -268,6 +348,10 @@ export default function SampleTemplate() {
       direction: BasicDirectionTypes.HORIZONTAL,
       step: "2",
     },
+    {
+      direction: BasicDirectionTypes.VERTICAL,
+      step: "3",
+    },
     // {
     //   direction: BasicDirectionTypes.HORIZONTAL,
     //   step: "1",
@@ -278,12 +362,21 @@ export default function SampleTemplate() {
     templateData2,
     templateData3,
     templateData4,
+    templateData5,
   ];
   const additionalPromptList: any[] = [
     additionalPrompt1,
     additionalPrompt2,
     additionalPrompt3,
     additionalPrompt4,
+    additionalPrompt5,
+  ];
+  const additionalChartPromptList: any[] = [
+    [],
+    [],
+    [],
+    [],
+    additionalChartPrompt5,
   ];
 
   const handleOpen = (key: number) => {
@@ -296,6 +389,7 @@ export default function SampleTemplate() {
     setBasicLayout(basicLayoutList[type - 1]);
     setSectionList(templateDataList[type - 1]);
     setAddPrompt(additionalPromptList[type - 1]);
+    setChartAddPrompt(additionalChartPromptList[type - 1]);
     onClose();
   };
 
@@ -345,6 +439,16 @@ export default function SampleTemplate() {
               height={24}
             />
             Template4
+          </Button>
+          <Button onPress={() => handleOpen(5)}>
+            <Image
+              src={"/images/ic_notice.png"}
+              className="rounded-none"
+              alt="EZCodeMaker"
+              width={24}
+              height={24}
+            />
+            Template5
           </Button>
         </div>
       </div>
