@@ -93,7 +93,7 @@ const TagStep_Chart: React.FC<Props> = ({
           ))}
         </Select>
       </div>
-      <div className="flex items-center px-4 border-r-1">
+      <div className="flex items-center px-4">
         <Input
           className="mr-1 w-[50px]"
           type="number"
@@ -102,33 +102,42 @@ const TagStep_Chart: React.FC<Props> = ({
           onValueChange={(e) => onValueChange(e, "dataset")}
         />
         <span className="mr-3 ml-1">Datasets</span>
-        <EzChartModal
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onOpenChange={onOpenChange}
-          itemKey={itemKey}
-        />
+        {sectionData.chartType === ChartType.DOUGHNUT &&
+        sectionData.datasets === 1 ? (
+          <></>
+        ) : (
+          <EzChartModal
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onOpenChange={onOpenChange}
+            itemKey={itemKey}
+          />
+        )}
       </div>
-      <div className="flex items-center px-4 border-r-1">
-        <Input
-          className="mr-1 w-[250px]"
-          type="text"
-          placeholder="X-Axis Title"
-          size="sm"
-          value={sectionData.xTitle}
-          onValueChange={(e) => onValueChange(e, "xAxis")}
-        />
-      </div>
-      <div className="flex items-center px-4">
-        <Input
-          className="mr-1 w-[250px]"
-          type="text"
-          placeholder="Y-Axis Title"
-          size="sm"
-          value={sectionData.yTitle}
-          onValueChange={(e) => onValueChange(e, "yAxis")}
-        />
-      </div>
+      {sectionData.chartType !== ChartType.DOUGHNUT && (
+        <>
+          <div className="flex items-center px-4 border-l-1 border-r-1">
+            <Input
+              className="mr-1 w-[250px]"
+              type="text"
+              placeholder="X-Axis Title"
+              size="sm"
+              value={sectionData.xTitle}
+              onValueChange={(e) => onValueChange(e, "xAxis")}
+            />
+          </div>
+          <div className="flex items-center px-4">
+            <Input
+              className="mr-1 w-[250px]"
+              type="text"
+              placeholder="Y-Axis Title"
+              size="sm"
+              value={sectionData.yTitle}
+              onValueChange={(e) => onValueChange(e, "yAxis")}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

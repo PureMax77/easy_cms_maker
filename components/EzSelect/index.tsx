@@ -17,7 +17,12 @@ import {
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import SampleTemplate from "./SampleTemplate";
-import { genFormPrompt, genListPrompt, genTablePrompt } from "@/lib/prompt";
+import {
+  genChartPrompt,
+  genFormPrompt,
+  genListPrompt,
+  genTablePrompt,
+} from "@/lib/prompt";
 
 type ChangeType = "title" | "description";
 
@@ -93,6 +98,9 @@ const EzSelect: React.FC = () => {
         } else if (section.kind === EzTagTypes.FORM) {
           // Form section
           return genFormPrompt(section, index);
+        } else if (section.kind === EzTagTypes.CHART) {
+          // Form section
+          return genChartPrompt(section, index);
         }
       })
       .join("\n");

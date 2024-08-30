@@ -1,6 +1,8 @@
 import {
+  ChartType,
   EzListLayoutTypes,
   EzTagTypes,
+  IChartOptions,
   IFormOptions,
   IListOptions,
   ITableOptions,
@@ -83,4 +85,54 @@ export const genFormPrompt = (section: IFormOptions, index: number) => {
     .join("");
 
   return name + title + type + items;
+};
+
+export const genChartPrompt = (section: IChartOptions, index: number) => {
+  const name = `- section${index + 1}\n\t`;
+  const type = `* chart type : ${section.chartType} chart with ${section.datasets} datasets\n\t`;
+
+  let datasets = "";
+
+  if (section.chartType !== ChartType.DOUGHNUT) {
+    // 도넛 차트 제외
+    datasets = section.datasetContents
+      .map((content, index, array) => {
+        const isLast = array.length - 1 === index;
+
+        const label = content.label
+          ? `Dataset${index + 1} has the label '${content.label}'. `
+          : "";
+        const color = `Dataset${index + 1} has backgroundColor of ${
+          content.backgroundColor
+        } and borderColor of ${content.borderColor}. `;
+
+        const suffix = isLast ? "\n\t" : "\n\t\t";
+        return `${index + 1}. ` + label + color + suffix;
+      })
+      .join("");
+  } else {
+    // 도넛차트의 경우
+    if (section.datasets > 1) {
+      datasets = section.datasetContents
+        .map((content, index, array) => {
+          const isLast = array.length - 1 === index;
+
+          const label = content.label
+            ? `Dataset${index + 1} has the label '${content.label}'. `
+            : "";
+
+          const suffix = isLast ? "\n\t" : "\n\t\t";
+          return `${index + 1}. ` + label + suffix;
+        })
+        .join("");
+    }
+  }
+
+  const finalDatasets = datasets ? "\t" + datasets : "";
+
+  const title = section.title ? `* chart title : ${section.title}\n\t` : "";
+  const xTitle = section.xTitle ? `* x-axis title : ${section.xTitle}\n\t` : "";
+  const yTitle = section.yTitle ? `* y-axis title : ${section.yTitle}\n\t` : "";
+
+  return name + type + finalDatasets + title + xTitle + yTitle;
 };

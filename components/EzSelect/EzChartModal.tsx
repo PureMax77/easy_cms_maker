@@ -1,5 +1,10 @@
 import { SectionListType, sectionListAtom } from "@/store";
-import { FormItemType, IChartOptions, IDatasetContent } from "@/types";
+import {
+  ChartType,
+  FormItemType,
+  IChartOptions,
+  IDatasetContent,
+} from "@/types";
 import {
   Button,
   Checkbox,
@@ -99,42 +104,46 @@ const EzChartModal: React.FC<Props> = ({
                           onValueChange(e.target.value, "label", index)
                         }
                       />
-                      <Button
-                        onPress={() => {
-                          setNowCIndex(index);
-                          setNowColorType("backgroundColor");
-                          onOpenC();
-                        }}
-                        size="sm"
-                        className="bg-gray-200 min-w-48 h-[48px] text-medium"
-                      >
-                        Background:{" "}
-                        <span
-                          style={{
-                            color: datasetContents[index].backgroundColor,
-                          }}
-                        >
-                          {datasetContents[index].backgroundColor}
-                        </span>
-                      </Button>
-                      <Button
-                        onPress={() => {
-                          setNowCIndex(index);
-                          setNowColorType("borderColor");
-                          onOpenC();
-                        }}
-                        size="sm"
-                        className="bg-gray-200 min-w-40 h-[48px] text-medium"
-                      >
-                        Border:{" "}
-                        <span
-                          style={{
-                            color: datasetContents[index].borderColor,
-                          }}
-                        >
-                          {datasetContents[index].borderColor}
-                        </span>
-                      </Button>
+                      {nowSection.chartType !== ChartType.DOUGHNUT && (
+                        <>
+                          <Button
+                            onPress={() => {
+                              setNowCIndex(index);
+                              setNowColorType("backgroundColor");
+                              onOpenC();
+                            }}
+                            size="sm"
+                            className="bg-gray-200 min-w-48 h-[48px] text-medium"
+                          >
+                            Background:{" "}
+                            <span
+                              style={{
+                                color: datasetContents[index].backgroundColor,
+                              }}
+                            >
+                              {datasetContents[index].backgroundColor}
+                            </span>
+                          </Button>
+                          <Button
+                            onPress={() => {
+                              setNowCIndex(index);
+                              setNowColorType("borderColor");
+                              onOpenC();
+                            }}
+                            size="sm"
+                            className="bg-gray-200 min-w-40 h-[48px] text-medium"
+                          >
+                            Border:{" "}
+                            <span
+                              style={{
+                                color: datasetContents[index].borderColor,
+                              }}
+                            >
+                              {datasetContents[index].borderColor}
+                            </span>
+                          </Button>
+                        </>
+                      )}
                     </li>
                   ))}
                 </ul>
