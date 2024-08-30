@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold tracking-tight">EZCodeMaker</h1>
+      {/* <h1 className="text-3xl font-bold tracking-tight">EZCodeMaker</h1> */}
       <div>
         <EzSelect />
 

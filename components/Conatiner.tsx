@@ -15,7 +15,7 @@ const Container = ({
 }) => {
   return (
     <div
-      className={`flex flex-col justify-center py-12`}
+      className={`flex flex-col justify-center pb-12`}
       style={{ ...style }}
     >
       {children}
