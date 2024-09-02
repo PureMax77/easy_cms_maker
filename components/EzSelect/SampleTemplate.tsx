@@ -453,21 +453,22 @@ export default function SampleTemplate() {
         </div>
       </div>
 
-      <Modal size={"3xl"} isOpen={isOpen} onClose={onClose}>
+      <Modal size="full" isOpen={isOpen} onClose={onClose}>
         <ModalContent className="bg-neutral-100">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 Template{type}
               </ModalHeader>
-              <ModalBody>
-                <div className="w-full flex justify-center">
+              <ModalBody className="flex items-center overflow-y-scroll">
+                <div className="flex justify-center w-2/3">
                   <Image
-                    className=" rounded-lg"
+                    className="rounded-lg"
                     src={`/template${type}.png`}
                     alt={`template${type}`}
-                    width={500}
-                    height={500}
+                    layout="responsive"
+                    width={1200}
+                    height={0}
                   />
                 </div>
               </ModalBody>
