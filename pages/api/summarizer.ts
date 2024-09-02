@@ -41,7 +41,7 @@ export default async function handler(
             content: finalContent,
           },
         ],
-        temperature: 0.3, // 창의성 표현 0~1
+        temperature: 0, // 창의성 표현 0~1
         max_tokens: 4000,
         top_p: 0.7, // 다양한 가능성?을 고려하는 정도 0~1
         frequency_penalty: 0.0, // 자주 반복되는 단어 사용을 줄이기 위해
